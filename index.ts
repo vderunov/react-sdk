@@ -13,7 +13,6 @@ export * from './importRewardsDistributors';
 export * from './importSpotMarketProxy';
 export * from './importSynthTokens';
 export * from './importSystemToken';
-export * from './index';
 export * from './parseError';
 export * from './useErrorParser';
 export * from './useImports';

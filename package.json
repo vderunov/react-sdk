@@ -7,13 +7,18 @@
   "publishConfig": {
     "access": "public"
   },
-  "type": "module",
-  "main": "index.js",
-  "types": "index.ts",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "module": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
   "repository": "synthetixio/react-sdk",
   "files": [
-    "*.js",
-    "*.ts"
+    "./*.ts",
+    "./*.js"
   ],
   "scripts": {
     "start": "tsc --watch",
