@@ -2,7 +2,7 @@
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
     "ignoreUnknown": true,
-    "ignore": [".idea", ".yarn", "node_modules", "*.json", "*.js", "yarn.lock", ".yarnrc.yml"]
+    "ignore": [".idea", ".yarn", "node_modules", "*.json", "*.js", "*.d.ts", "yarn.lock", ".yarnrc.yml"]
   },
   "organizeImports": {
     "enabled": true
