@@ -88,5 +88,4 @@ out
 .pnp.*
 
 
-/*.js
-/*.d.ts
+/dist

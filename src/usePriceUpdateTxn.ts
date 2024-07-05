@@ -9,7 +9,7 @@ export function usePriceUpdateTxn({
   provider,
   priceIds,
 }: {
-  provider: ethers.providers.BaseProvider;
+  provider?: ethers.providers.BaseProvider;
   priceIds?: string[];
 }) {
   const { chainId, queryClient } = useSynthetix();
