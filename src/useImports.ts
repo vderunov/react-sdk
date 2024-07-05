@@ -20,7 +20,7 @@ export function useImportContract(
 
   return useQuery(
     {
-      queryKey: [name, chainId, preset],
+      queryKey: [`Import${name}`, chainId, preset],
       enabled: Boolean(name && chainId && preset),
       queryFn: () => {
         if (!(name && chainId && preset)) {
@@ -54,7 +54,7 @@ export function useImportExtras() {
   const { chainId, preset, queryClient } = useSynthetix();
   return useQuery(
     {
-      queryKey: [chainId, preset],
+      queryKey: ['ImportExtras', chainId, preset],
       enabled: Boolean(chainId && preset),
       queryFn: () => {
         if (!(chainId && preset)) {
@@ -73,7 +73,7 @@ export function useImportSystemToken() {
   const { chainId, preset, queryClient } = useSynthetix();
   return useQuery(
     {
-      queryKey: [chainId, preset],
+      queryKey: ['ImportSystemToken', chainId, preset],
       enabled: Boolean(chainId && preset),
       queryFn: () => {
         if (!(chainId && preset)) {
@@ -92,7 +92,7 @@ export function useImportSynthTokens() {
   const { chainId, preset, queryClient } = useSynthetix();
   return useQuery(
     {
-      queryKey: [chainId, preset],
+      queryKey: ['ImportSynthTokens', chainId, preset],
       enabled: Boolean(chainId && preset),
       queryFn: () => {
         if (!(chainId && preset)) {
@@ -111,7 +111,7 @@ export function useImportMintableTokens() {
   const { chainId, preset, queryClient } = useSynthetix();
   return useQuery(
     {
-      queryKey: [chainId, preset],
+      queryKey: ['ImportMintableTokens', chainId, preset],
       enabled: Boolean(chainId && preset),
       queryFn: () => {
         if (!(chainId && preset)) {
@@ -131,7 +131,7 @@ export function useImportRewardsDistributors() {
 
   return useQuery(
     {
-      queryKey: [chainId, preset],
+      queryKey: ['ImportRewardsDistributors', chainId, preset],
       enabled: Boolean(chainId && preset),
       queryFn: () => {
         if (!(chainId && preset)) {
@@ -151,7 +151,7 @@ export function useImportCollateralTokens() {
 
   return useQuery(
     {
-      queryKey: [chainId, preset],
+      queryKey: ['ImportCollateralTokens', chainId, preset],
       enabled: Boolean(chainId && preset),
       queryFn: () => {
         if (!(chainId && preset)) {
