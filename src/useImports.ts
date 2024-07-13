@@ -6,6 +6,8 @@ import { importCoreProxy } from './importCoreProxy';
 import { importExtras } from './importExtras';
 import { importMintableTokens } from './importMintableTokens';
 import { importMulticall } from './importMulticall';
+import { importPerpsAccountProxy } from './importPerpsAccountProxy';
+import { importPerpsMarketProxy } from './importPerpsMarketProxy';
 import { importPythERC7412Wrapper } from './importPythERC7412Wrapper';
 import { importRewardsDistributors } from './importRewardsDistributors';
 import { importSpotMarketProxy } from './importSpotMarketProxy';
@@ -14,7 +16,15 @@ import { importSystemToken } from './importSystemToken';
 import { useSynthetix } from './useSynthetix';
 
 export function useImportContract(
-  name: 'AccountProxy' | 'AllErrors' | 'CoreProxy' | 'Multicall' | 'PythERC7412Wrapper' | 'SpotMarketProxy' | 'extras'
+  name:
+    | 'AccountProxy'
+    | 'AllErrors'
+    | 'CoreProxy'
+    | 'Multicall'
+    | 'PythERC7412Wrapper'
+    | 'SpotMarketProxy'
+    | 'PerpsAccountProxy'
+    | 'PerpsMarketProxy'
 ) {
   const { chainId, preset, queryClient } = useSynthetix();
 
@@ -39,6 +49,10 @@ export function useImportContract(
             return importPythERC7412Wrapper(chainId, preset);
           case 'SpotMarketProxy':
             return importSpotMarketProxy(chainId, preset);
+          case 'PerpsMarketProxy':
+            return importPerpsMarketProxy(chainId, preset);
+          case 'PerpsAccountProxy':
+            return importPerpsAccountProxy(chainId, preset);
           default:
             throw new Error(`Unsupported contract ${name}`);
         }
