@@ -22,3 +22,4 @@ export * from './usePerpsGetMarkets';
 export * from './usePerpsGetMarketSummary';
 export * from './usePerpsMetadata';
 export * from './usePerpsAccounts';
+export * from './useMintUsd';
