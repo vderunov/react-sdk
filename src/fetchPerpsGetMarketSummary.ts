@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-export async function fetchGetMarketSummary({
+export async function fetchPerpsGetMarketSummary({
   provider,
   marketId,
   PerpsMarketProxyContract,

@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import type { ethers } from 'ethers';
-import { fetchGetMarketSummary } from './fetchGetMarketSummary';
-import { fetchGetMarketSummaryWithPriceUpdate } from './fetchGetMarketSummaryWithPriceUpdate';
+import { fetchPerpsGetMarketSummary } from './fetchPerpsGetMarketSummary';
+import { fetchPerpsGetMarketSummaryWithPriceUpdate } from './fetchPerpsGetMarketSummaryWithPriceUpdate';
 import { useImportContract } from './useImports';
 import { usePriceUpdateTxn } from './usePriceUpdateTxn';
 import { useSynthetix } from './useSynthetix';
 
-interface GetMarketSummary {
+interface PerpsGetMarketSummary {
   skew: ethers.BigNumber;
   size: ethers.BigNumber;
   maxOpenInterest: ethers.BigNumber;
@@ -15,7 +15,7 @@ interface GetMarketSummary {
   indexPrice: ethers.BigNumber;
 }
 
-export function useGetMarketSummary({
+export function usePerpsGetMarketSummary({
   provider,
   priceIds,
   marketId,
@@ -25,7 +25,7 @@ export function useGetMarketSummary({
   const { data: MulticallContract } = useImportContract('Multicall');
   const { data: priceUpdateTxn } = usePriceUpdateTxn({ provider, priceIds });
 
-  return useQuery<GetMarketSummary>({
+  return useQuery<PerpsGetMarketSummary>({
     enabled: Boolean(
       chainId && provider && priceIds && marketId && PerpsMarketProxyContract?.address && MulticallContract?.address && priceUpdateTxn
     ),
@@ -43,7 +43,7 @@ export function useGetMarketSummary({
       }
 
       if (priceUpdateTxn.value) {
-        return await fetchGetMarketSummaryWithPriceUpdate({
+        return await fetchPerpsGetMarketSummaryWithPriceUpdate({
           provider,
           marketId,
           PerpsMarketProxyContract,
@@ -52,7 +52,7 @@ export function useGetMarketSummary({
         });
       }
 
-      return await fetchGetMarketSummary({ provider, marketId, PerpsMarketProxyContract });
+      return await fetchPerpsGetMarketSummary({ provider, marketId, PerpsMarketProxyContract });
     },
   });
 }
