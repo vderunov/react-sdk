@@ -20,3 +20,4 @@ export * from './usePriceUpdateTxn';
 export * from './useSynthetix';
 export * from './usePerpsGetMarkets';
 export * from './usePerpsGetMarketSummary';
+export * from './usePerpsMetadata';
