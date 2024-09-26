@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { ethers } from 'ethers';
+import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
 
@@ -9,6 +10,7 @@ export function usePerpsMetadata({
 }: { provider?: ethers.providers.BaseProvider; perpsMarketId?: ethers.BigNumber }) {
   const { chainId } = useSynthetix();
   const { data: PerpsMarketProxyContract } = useImportContract('PerpsMarketProxy');
+  const errorParser = useErrorParser();
 
   return useQuery<{
     name: string;
@@ -28,8 +30,13 @@ export function usePerpsMetadata({
 
       const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, provider);
       const { symbol, name } = await PerpsMarketProxy.metadata(perpsMarketId);
-
+      console.log({ symbol, name });
       return { symbol, name };
+    },
+    throwOnError: (error) => {
+      // TODO: show toast
+      errorParser(error);
+      return false;
     },
   });
 }
