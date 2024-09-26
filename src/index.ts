@@ -23,4 +23,4 @@ export * from './usePerpsGetMarketSummary';
 export * from './usePerpsMetadata';
 export * from './usePerpsAccounts';
 export * from './useMintUsd';
-export * from './usePerpsDeposit';
+export * from './useWethDeposit';
