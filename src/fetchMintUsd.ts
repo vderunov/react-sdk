@@ -20,8 +20,20 @@ export async function fetchMintUsd({
   const signer = provider.getSigner(walletAddress);
 
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, signer);
-  const tx: ethers.ContractTransaction = await CoreProxy.mintUsd(accountId, poolId, tokenAddress, mintUsdAmount);
-  const txResult = await tx.wait();
+  const mintUsdTxnArgs = [
+    //
+    accountId,
+    poolId,
+    tokenAddress,
+    mintUsdAmount,
+  ];
+  console.log('mintUsdTxnArgs', mintUsdTxnArgs);
 
+  console.time('mintUsd');
+  const tx: ethers.ContractTransaction = await CoreProxy.mintUsd(...mintUsdTxnArgs);
+  console.timeEnd('mintUsd');
+  console.log({ tx });
+  const txResult = await tx.wait();
+  console.log({ txResult });
   return txResult;
 }

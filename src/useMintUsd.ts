@@ -3,6 +3,7 @@ import type { ethers } from 'ethers';
 import { fetchMintUsd } from './fetchMintUsd';
 import { fetchMintUsdWithPriceUpdate } from './fetchMintUsdWithPriceUpdate';
 import { fetchPriceUpdateTxn } from './fetchPriceUpdateTxn';
+import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
 
@@ -27,6 +28,7 @@ export function useMintUsd({
   const { data: CoreProxyContract } = useImportContract('CoreProxy');
   const { data: MulticallContract } = useImportContract('Multicall');
   const { data: PythERC7412WrapperContract } = useImportContract('PythERC7412Wrapper');
+  const errorParser = useErrorParser();
 
   return useMutation({
     retry: false,
@@ -58,8 +60,10 @@ export function useMintUsd({
         PythERC7412WrapperContract,
         priceIds,
       });
+      console.log({ freshPriceUpdateTxn });
 
       if (freshPriceUpdateTxn.value) {
+        console.log('-> fetchMintUsdWithPriceUpdate');
         await fetchMintUsdWithPriceUpdate({
           provider,
           walletAddress,
@@ -72,6 +76,7 @@ export function useMintUsd({
           priceUpdateTxn: freshPriceUpdateTxn,
         });
       } else {
+        console.log('-> fetchMintUsd');
         await fetchMintUsd({
           walletAddress,
           provider,
@@ -83,6 +88,11 @@ export function useMintUsd({
         });
       }
       return { priceUpdated: true };
+    },
+    throwOnError: (error) => {
+      // TODO: show toast
+      errorParser(error);
+      return false;
     },
     onSuccess: ({ priceUpdated }) => {
       onSuccess({ priceUpdated });
