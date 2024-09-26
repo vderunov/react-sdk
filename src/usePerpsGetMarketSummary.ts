@@ -6,15 +6,6 @@ import { useImportContract } from './useImports';
 import { usePriceUpdateTxn } from './usePriceUpdateTxn';
 import { useSynthetix } from './useSynthetix';
 
-interface PerpsGetMarketSummary {
-  skew: ethers.BigNumber;
-  size: ethers.BigNumber;
-  maxOpenInterest: ethers.BigNumber;
-  currentFundingRate: ethers.BigNumber;
-  currentFundingVelocity: ethers.BigNumber;
-  indexPrice: ethers.BigNumber;
-}
-
 export function usePerpsGetMarketSummary({
   provider,
   priceIds,
@@ -25,7 +16,7 @@ export function usePerpsGetMarketSummary({
   const { data: MulticallContract } = useImportContract('Multicall');
   const { data: priceUpdateTxn } = usePriceUpdateTxn({ provider, priceIds });
 
-  return useQuery<PerpsGetMarketSummary>({
+  return useQuery({
     enabled: Boolean(
       chainId && provider && priceIds && marketId && PerpsMarketProxyContract?.address && MulticallContract?.address && priceUpdateTxn
     ),

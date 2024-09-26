@@ -17,7 +17,14 @@ export async function fetchPerpsGetMarketSummaryWithPriceUpdate({
     value: number;
     requireSuccess: boolean;
   };
-}) {
+}): Promise<{
+  skew: ethers.BigNumber;
+  size: ethers.BigNumber;
+  maxOpenInterest: ethers.BigNumber;
+  currentFundingRate: ethers.BigNumber;
+  currentFundingVelocity: ethers.BigNumber;
+  indexPrice: ethers.BigNumber;
+}> {
   const PerpsMarketProxyInterface = new ethers.utils.Interface(PerpsMarketProxyContract.abi);
   const MulticallInterface = new ethers.utils.Interface(MulticallContract.abi);
 
