@@ -22,43 +22,21 @@ export async function importWeth(chainId: number, preset: string): Promise<{ add
     case '1-main': {
       return { address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', abi: abi };
     }
-    // TODO: define correct WETH contract addresses for this chains
-    // case '11155111-main': {
-    //   const { sepolia } = await import('viem/chains');
-    //   return { address: sepolia.contracts.multicall3.address, abi: abi };
-    // }
-    // case '10-main': {
-    //   const { optimism } = await import('viem/chains');
-    //   return { address: optimism.contracts.multicall3.address, abi: abi };
-    // }
-    // case '8453-andromeda': {
-    //   const [{ default: meta }, { default: abi }] = await Promise.all([
-    //     import('@synthetixio/v3-contracts/8453-andromeda/meta.json'),
-    //     import('@synthetixio/v3-contracts/8453-andromeda/TrustedMulticallForwarder.readable.json'),
-    //   ]);
-    //   return { address: meta.contracts.TrustedMulticallForwarder, abi };
-    // }
-    // case '84532-andromeda': {
-    //   const [{ default: meta }, { default: abi }] = await Promise.all([
-    //     import('@synthetixio/v3-contracts/84532-andromeda/meta.json'),
-    //     import('@synthetixio/v3-contracts/84532-andromeda/TrustedMulticallForwarder.readable.json'),
-    //   ]);
-    //   return { address: meta.contracts.TrustedMulticallForwarder, abi };
-    // }
-    // case '42161-main': {
-    //   const [{ default: meta }, { default: abi }] = await Promise.all([
-    //     import('@synthetixio/v3-contracts/42161-main/meta.json'),
-    //     import('@synthetixio/v3-contracts/42161-main/TrustedMulticallForwarder.readable.json'),
-    //   ]);
-    //   return { address: meta.contracts.TrustedMulticallForwarder, abi };
-    // }
-    // case '42161-arbthetix': {
-    //   const [{ default: meta }, { default: abi }] = await Promise.all([
-    //     import('@synthetixio/v3-contracts/42161-arbthetix/meta.json'),
-    //     import('@synthetixio/v3-contracts/42161-arbthetix/TrustedMulticallForwarder.readable.json'),
-    //   ]);
-    //   return { address: meta.contracts.TrustedMulticallForwarder, abi };
-    // }
+    case '11155111-main': {
+      return { address: '0xf531B8F309Be94191af87605CfBf600D71C2cFe0', abi: abi };
+    }
+    case '10-main': {
+      return { address: '0x4200000000000000000000000000000000000006', abi: abi };
+    }
+    case '8453-andromeda': {
+      return { address: '0x4200000000000000000000000000000000000006', abi: abi };
+    }
+    case '84532-andromeda': {
+      return { address: '0x6E9fd273209C1DfA62a085ae017ff1bc778E4114', abi: abi };
+    }
+    case '42161-main': {
+      return { address: '0x82af49447d8a07e3bd95bd0d56f35241523fbab1', abi: abi };
+    }
     case '421614-main': {
       return { address: '0x980B62Da83eFf3D4576C647993b0c1D7faf17c73', abi: abi };
     }
