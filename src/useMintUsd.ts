@@ -6,26 +6,12 @@ import { fetchPriceUpdateTxn } from './fetchPriceUpdateTxn';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
 
-interface CollateralType {
-  address: string;
-  decimals: number;
-  depositingEnabled: boolean;
-  issuanceRatioD18: ethers.BigNumber;
-  liquidationRatioD18: ethers.BigNumber;
-  liquidationRewardD18: ethers.BigNumber;
-  minDelegationD18: ethers.BigNumber;
-  name: string;
-  oracleNodeId: string;
-  symbol: string;
-  tokenAddress: string;
-}
-
 export function useMintUsd({
   provider,
   priceIds,
   walletAddress,
   accountId,
-  collateralType,
+  collateralTokenAddress,
   poolId,
   onSuccess,
 }: {
@@ -33,7 +19,7 @@ export function useMintUsd({
   priceIds?: string[];
   walletAddress?: string;
   accountId?: ethers.BigNumber;
-  collateralType?: CollateralType;
+  collateralTokenAddress?: string;
   poolId?: ethers.BigNumber;
   onSuccess: ({ priceUpdated }: { priceUpdated: boolean }) => void;
 }) {
@@ -56,7 +42,7 @@ export function useMintUsd({
           priceIds &&
           accountId &&
           poolId &&
-          collateralType
+          collateralTokenAddress
         )
       ) {
         throw 'OMFG';
@@ -81,7 +67,7 @@ export function useMintUsd({
           MulticallContract,
           accountId,
           poolId,
-          tokenAddress: collateralType.address,
+          tokenAddress: collateralTokenAddress,
           mintUsdAmount,
           priceUpdateTxn: freshPriceUpdateTxn,
         });
@@ -92,7 +78,7 @@ export function useMintUsd({
           CoreProxyContract,
           accountId,
           poolId,
-          tokenAddress: collateralType.address,
+          tokenAddress: collateralTokenAddress,
           mintUsdAmount,
         });
       }
