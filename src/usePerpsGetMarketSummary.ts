@@ -9,8 +9,8 @@ import { useSynthetix } from './useSynthetix';
 export function usePerpsGetMarketSummary({
   provider,
   priceIds,
-  marketId,
-}: { provider?: ethers.providers.BaseProvider; priceIds?: string[]; marketId: ethers.BigNumber }) {
+  perpsMarketId,
+}: { provider?: ethers.providers.BaseProvider; priceIds?: string[]; perpsMarketId: ethers.BigNumber }) {
   const { chainId } = useSynthetix();
   const { data: PerpsMarketProxyContract } = useImportContract('PerpsMarketProxy');
   const { data: MulticallContract } = useImportContract('Multicall');
@@ -18,17 +18,25 @@ export function usePerpsGetMarketSummary({
 
   return useQuery({
     enabled: Boolean(
-      chainId && provider && priceIds && marketId && PerpsMarketProxyContract?.address && MulticallContract?.address && priceUpdateTxn
+      chainId && provider && priceIds && perpsMarketId && PerpsMarketProxyContract?.address && MulticallContract?.address && priceUpdateTxn
     ),
     queryKey: [
       chainId,
       'Perps GetMarketSummary',
       { PerpsMarketProxy: PerpsMarketProxyContract?.address, Multicall: MulticallContract?.address },
-      { marketId: marketId.toString() },
+      { perpsMarketId: perpsMarketId.toString() },
     ],
     queryFn: async () => {
       if (
-        !(chainId && provider && priceIds && marketId && PerpsMarketProxyContract?.address && MulticallContract?.address && priceUpdateTxn)
+        !(
+          chainId &&
+          provider &&
+          priceIds &&
+          perpsMarketId &&
+          PerpsMarketProxyContract?.address &&
+          MulticallContract?.address &&
+          priceUpdateTxn
+        )
       ) {
         throw 'OMFG';
       }
@@ -36,14 +44,14 @@ export function usePerpsGetMarketSummary({
       if (priceUpdateTxn.value) {
         return await fetchPerpsGetMarketSummaryWithPriceUpdate({
           provider,
-          marketId,
+          perpsMarketId,
           PerpsMarketProxyContract,
           MulticallContract,
           priceUpdateTxn,
         });
       }
 
-      return await fetchPerpsGetMarketSummary({ provider, marketId, PerpsMarketProxyContract });
+      return await fetchPerpsGetMarketSummary({ provider, perpsMarketId, PerpsMarketProxyContract });
     },
   });
 }

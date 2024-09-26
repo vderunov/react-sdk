@@ -2,13 +2,13 @@ import { ethers } from 'ethers';
 
 export async function fetchPerpsGetMarketSummaryWithPriceUpdate({
   provider,
-  marketId,
+  perpsMarketId,
   PerpsMarketProxyContract,
   MulticallContract,
   priceUpdateTxn,
 }: {
   provider: ethers.providers.BaseProvider;
-  marketId: ethers.BigNumber;
+  perpsMarketId: ethers.BigNumber;
   PerpsMarketProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
   priceUpdateTxn: {
@@ -30,7 +30,7 @@ export async function fetchPerpsGetMarketSummaryWithPriceUpdate({
 
   const getMarketSummaryTxn = {
     target: PerpsMarketProxyContract.address,
-    callData: PerpsMarketProxyInterface.encodeFunctionData('getMarketSummary', [marketId]),
+    callData: PerpsMarketProxyInterface.encodeFunctionData('getMarketSummary', [perpsMarketId]),
     value: 0,
     requireSuccess: true,
   };

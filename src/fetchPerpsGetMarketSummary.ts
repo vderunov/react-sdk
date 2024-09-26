@@ -2,11 +2,11 @@ import { ethers } from 'ethers';
 
 export async function fetchPerpsGetMarketSummary({
   provider,
-  marketId,
+  perpsMarketId,
   PerpsMarketProxyContract,
 }: {
   provider: ethers.providers.BaseProvider;
-  marketId: ethers.BigNumber;
+  perpsMarketId: ethers.BigNumber;
   PerpsMarketProxyContract: { address: string; abi: string[] };
 }): Promise<{
   skew: ethers.BigNumber;
@@ -17,6 +17,6 @@ export async function fetchPerpsGetMarketSummary({
   indexPrice: ethers.BigNumber;
 }> {
   const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, provider);
-  const marketSummary = await PerpsMarketProxy.getMarketSummary(marketId);
+  const marketSummary = await PerpsMarketProxy.getMarketSummary(perpsMarketId);
   return marketSummary;
 }
