@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { ethers } from 'ethers';
+import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
 
@@ -12,6 +13,7 @@ export function usePerpsAccounts({
 }) {
   const { chainId } = useSynthetix();
   const { data: PerpsAccountProxyContract } = useImportContract('PerpsAccountProxy');
+  const errorParser = useErrorParser();
 
   return useQuery({
     enabled: Boolean(chainId && provider && walletAddress && PerpsAccountProxyContract?.address),
@@ -29,5 +31,10 @@ export function usePerpsAccounts({
       return accounts;
     },
     select: (accounts) => accounts.map((accountId) => ethers.BigNumber.from(accountId)),
+    throwOnError: (error) => {
+      // TODO: show toast
+      errorParser(error);
+      return false;
+    },
   });
 }
