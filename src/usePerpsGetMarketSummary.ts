@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import type { ethers } from 'ethers';
 import { fetchPerpsGetMarketSummary } from './fetchPerpsGetMarketSummary';
 import { fetchPerpsGetMarketSummaryWithPriceUpdate } from './fetchPerpsGetMarketSummaryWithPriceUpdate';
+import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { usePriceUpdateTxn } from './usePriceUpdateTxn';
 import { useSynthetix } from './useSynthetix';
@@ -15,6 +16,7 @@ export function usePerpsGetMarketSummary({
   const { data: PerpsMarketProxyContract } = useImportContract('PerpsMarketProxy');
   const { data: MulticallContract } = useImportContract('Multicall');
   const { data: priceUpdateTxn } = usePriceUpdateTxn({ provider, priceIds });
+  const errorParser = useErrorParser();
 
   return useQuery({
     enabled: Boolean(
@@ -41,7 +43,16 @@ export function usePerpsGetMarketSummary({
         throw 'OMFG';
       }
 
+      console.log({
+        provider,
+        perpsMarketId,
+        PerpsMarketProxyContract,
+        MulticallContract,
+        priceUpdateTxn,
+      });
+
       if (priceUpdateTxn.value) {
+        console.log('-> fetchPerpsGetMarketSummaryWithPriceUpdate');
         return await fetchPerpsGetMarketSummaryWithPriceUpdate({
           provider,
           perpsMarketId,
@@ -51,7 +62,13 @@ export function usePerpsGetMarketSummary({
         });
       }
 
+      console.log('-> fetchPerpsGetMarketSummary');
       return await fetchPerpsGetMarketSummary({ provider, perpsMarketId, PerpsMarketProxyContract });
+    },
+    throwOnError: (error) => {
+      // TODO: show toast
+      errorParser(error);
+      return false;
     },
   });
 }

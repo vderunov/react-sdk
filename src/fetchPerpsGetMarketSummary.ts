@@ -18,5 +18,6 @@ export async function fetchPerpsGetMarketSummary({
 }> {
   const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, provider);
   const marketSummary = await PerpsMarketProxy.getMarketSummary(perpsMarketId);
+  console.log({ marketSummary });
   return marketSummary;
 }

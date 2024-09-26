@@ -46,9 +46,11 @@ export async function fetchPerpsGetMarketSummaryWithPriceUpdate({
     if (decodedMulticall?.returnData?.[1]?.returnData) {
       const getMarketSummaryTxnData = decodedMulticall.returnData[1].returnData;
       const marketSummary = PerpsMarketProxyInterface.decodeFunctionResult('getMarketSummary', getMarketSummaryTxnData);
+      console.log('>>>>> marketSummary', marketSummary);
       return marketSummary[0];
     }
 
+    console.error({ decodedMulticall });
     throw new Error('Unexpected multicall response');
   }
   throw new Error('Empty multicall response');
