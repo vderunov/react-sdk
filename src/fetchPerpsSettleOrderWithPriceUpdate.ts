@@ -1,56 +1,49 @@
 import { ethers } from 'ethers';
 
-export async function fetchPerpsCommitOrderWithPriceUpdate({
-  walletAddress,
+export async function fetchPerpsSettleOrderWithPriceUpdate({
   provider,
+  walletAddress,
   PerpsMarketProxyContract,
   MulticallContract,
-  orderCommitmentArgs,
+  perpsAccountId,
   priceUpdateTxn,
 }: {
-  walletAddress?: string;
   provider: ethers.providers.Web3Provider;
+  walletAddress?: string;
   PerpsMarketProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
-  orderCommitmentArgs: {
-    perpsMarketId: string;
-    accountId: ethers.BigNumber;
-    sizeDelta: ethers.BigNumber;
-    settlementStrategyId: string;
-    acceptablePrice: ethers.BigNumber;
-    referrer: string;
-    trackingCode: string;
-  };
+  perpsAccountId: ethers.BigNumber;
   priceUpdateTxn: {
     target: string;
     callData: string;
-    value: number;
+    value: ethers.BigNumber;
     requireSuccess: boolean;
   };
 }) {
   const PerpsMarketPoxyInterface = new ethers.utils.Interface(PerpsMarketProxyContract.abi);
   const MulticallInterface = new ethers.utils.Interface(MulticallContract.abi);
 
-  const commitOrderTxn = {
+  const settleOrderTxn = {
     target: PerpsMarketProxyContract.address,
-    callData: PerpsMarketPoxyInterface.encodeFunctionData('commitOrder', [orderCommitmentArgs]),
+    callData: PerpsMarketPoxyInterface.encodeFunctionData('settleOrder', [perpsAccountId]),
     value: 0,
     requireSuccess: true,
   };
-  console.log({ commitOrderTxn });
+  console.log({ settleOrderTxn });
+
   const signer = provider.getSigner(walletAddress);
 
   const multicallTxn = {
     from: walletAddress,
     to: MulticallContract.address,
-    data: MulticallInterface.encodeFunctionData('aggregate3Value', [[priceUpdateTxn, commitOrderTxn]]),
+    data: MulticallInterface.encodeFunctionData('aggregate3Value', [[priceUpdateTxn, settleOrderTxn]]),
     value: priceUpdateTxn.value,
   };
   console.log({ multicallTxn });
 
-  console.time('fetchPerpsCommitOrderWithPriceUpdate');
+  console.time('fetchPerpsSettleOrderWithPriceUpdate');
   const tx: ethers.ContractTransaction = await signer.sendTransaction(multicallTxn);
-  console.timeEnd('fetchPerpsCommitOrderWithPriceUpdate');
+  console.timeEnd('fetchPerpsSettleOrderWithPriceUpdate');
 
   const txResult = await tx.wait();
   console.log({ txResult });

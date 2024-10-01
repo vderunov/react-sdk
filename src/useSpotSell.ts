@@ -111,7 +111,7 @@ export function useSpotSell({
           walletAddress,
           SpotMarketProxyContract,
           MulticallContract,
-          marketId: synthMarketId,
+          synthMarketId,
           amount,
           priceUpdateTxn: freshPriceUpdateTxn,
         });
@@ -123,7 +123,7 @@ export function useSpotSell({
         provider,
         walletAddress,
         SpotMarketProxyContract,
-        marketId: synthMarketId,
+        synthMarketId,
         amount,
       });
       return { priceUpdated: false };

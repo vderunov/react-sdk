@@ -5,7 +5,7 @@ export async function fetchSpotSellWithPriceUpdate({
   walletAddress,
   SpotMarketProxyContract,
   MulticallContract,
-  marketId,
+  synthMarketId,
   amount,
   priceUpdateTxn,
 }: {
@@ -13,7 +13,7 @@ export async function fetchSpotSellWithPriceUpdate({
   walletAddress: string;
   SpotMarketProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
-  marketId: string;
+  synthMarketId: string;
   amount: ethers.BigNumber;
   priceUpdateTxn: {
     target: string;
@@ -25,7 +25,7 @@ export async function fetchSpotSellWithPriceUpdate({
   const SpotMarketProxyInterface = new ethers.utils.Interface(SpotMarketProxyContract.abi);
   const MulticallInterface = new ethers.utils.Interface(MulticallContract.abi);
 
-  const sellArgs = [marketId, amount, amount, ethers.constants.AddressZero];
+  const sellArgs = [synthMarketId, amount, amount, ethers.constants.AddressZero];
 
   console.log({ sellArgs });
 
