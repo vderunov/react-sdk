@@ -12,7 +12,7 @@ import { useSynthetix } from './useSynthetix';
 
 export function usePerpsCommitOrder({
   perpsAccountId,
-  marketId,
+  perpsMarketId,
   provider,
   walletAddress,
   feedId,
@@ -20,7 +20,7 @@ export function usePerpsCommitOrder({
   onSuccess,
 }: {
   perpsAccountId?: ethers.BigNumber;
-  marketId: string;
+  perpsMarketId: string;
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
   feedId?: string;
@@ -82,7 +82,7 @@ export function usePerpsCommitOrder({
       const pythPrice = await getPythPrice({ feedId });
 
       const orderCommitmentArgs = {
-        marketId,
+        perpsMarketId,
         accountId: perpsAccountId,
         sizeDelta,
         settlementStrategyId,

@@ -8,8 +8,8 @@ export function usePerpsGetOpenPosition({
   provider,
   walletAddress,
   perpsAccountId,
-  market,
-}: { provider?: ethers.providers.Web3Provider; walletAddress?: string; perpsAccountId?: ethers.BigNumber; market?: string }) {
+  perpsMarketId,
+}: { provider?: ethers.providers.Web3Provider; walletAddress?: string; perpsAccountId?: ethers.BigNumber; perpsMarketId?: string }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();
 
@@ -21,23 +21,21 @@ export function usePerpsGetOpenPosition({
     positionSize: BigNumber;
     totalPnl: BigNumber;
   }>({
-    enabled: Boolean(chainId && provider && PerpsMarketProxyContract?.address && walletAddress && perpsAccountId && market),
+    enabled: Boolean(chainId && provider && PerpsMarketProxyContract?.address && walletAddress && perpsAccountId && perpsMarketId),
     queryKey: [
       chainId,
       'PerpsGetOpenPosition',
-      { market },
       { PerpsMarketProxy: PerpsMarketProxyContract?.address },
-      perpsAccountId,
-      { walletAddress },
+      { walletAddress, perpsAccountId, perpsMarketId },
     ],
     queryFn: async () => {
-      if (!(chainId && provider && PerpsMarketProxyContract?.address && walletAddress && perpsAccountId && market)) {
+      if (!(chainId && provider && PerpsMarketProxyContract?.address && walletAddress && perpsAccountId && perpsMarketId)) {
         throw 'OMFG';
       }
 
       const signer = provider.getSigner(walletAddress);
       const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, signer);
-      const openPosition = await PerpsMarketProxy.getOpenPosition(perpsAccountId, market);
+      const openPosition = await PerpsMarketProxy.getOpenPosition(perpsAccountId, perpsMarketId);
       console.log({ openPosition });
       return openPosition;
     },

@@ -7,8 +7,8 @@ import { useSynthetix } from './useSynthetix';
 export function usePerpsGetSettlementStrategy({
   provider,
   settlementStrategyId,
-  market,
-}: { settlementStrategyId?: string; provider?: ethers.providers.BaseProvider; market?: string }) {
+  perpsMarketId,
+}: { settlementStrategyId?: string; provider?: ethers.providers.BaseProvider; perpsMarketId?: string }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();
 
@@ -24,20 +24,20 @@ export function usePerpsGetSettlementStrategy({
     settlementWindowDuration: ethers.BigNumber;
     strategyType: number;
   }>({
-    enabled: Boolean(chainId && provider && PerpsMarketProxyContract?.address && settlementStrategyId && market),
+    enabled: Boolean(chainId && provider && PerpsMarketProxyContract?.address && settlementStrategyId && perpsMarketId),
     queryKey: [
       chainId,
       'PerpsGetSettlementStrategy',
       { PerpsMarketProxy: PerpsMarketProxyContract?.address },
-      { market, settlementStrategyId },
+      { perpsMarketId, settlementStrategyId },
     ],
     queryFn: async () => {
-      if (!(chainId && provider && PerpsMarketProxyContract?.address && settlementStrategyId && market)) {
+      if (!(chainId && provider && PerpsMarketProxyContract?.address && settlementStrategyId && perpsMarketId)) {
         throw 'OMFG';
       }
 
       const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, provider);
-      const settlementStrategy = await PerpsMarketProxy.getSettlementStrategy(market, settlementStrategyId);
+      const settlementStrategy = await PerpsMarketProxy.getSettlementStrategy(perpsMarketId, settlementStrategyId);
       console.log({ settlementStrategy });
       return settlementStrategy;
     },

@@ -3,7 +3,6 @@ import type { ethers } from 'ethers';
 import { fetchPerpsSettleOrder } from './fetchPerpsSettleOrder';
 import { fetchPerpsSettleOrderWithPriceUpdate } from './fetchPerpsSettleOrderWithPriceUpdate';
 import { fetchStrictPriceUpdateTxn } from './fetchStrictPriceUpdateTxn';
-import { useAllPriceFeeds } from './useAllPriceFeeds';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { usePerpsGetOrder } from './usePerpsGetOrder';
@@ -14,13 +13,13 @@ import { useSynthetix } from './useSynthetix';
 export function usePerpsSettleOrder({
   provider,
   walletAddress,
-  market,
+  perpsMarketId,
   perpsAccountIdFromParams,
   settlementStrategyId,
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  market?: string;
+  perpsMarketId?: string;
   perpsAccountIdFromParams?: string;
   settlementStrategyId?: string;
 }) {
@@ -30,8 +29,7 @@ export function usePerpsSettleOrder({
   const { data: MulticallContract } = useImportContract('Multicall');
   const { data: PythERC7412WrapperContract } = useImportContract('PythERC7412Wrapper');
   const perpsAccountId = usePerpsSelectedAccountId({ provider, walletAddress, perpsAccountId: perpsAccountIdFromParams });
-  const { data: priceIds } = useAllPriceFeeds();
-  const { data: settlementStrategy } = usePerpsGetSettlementStrategy({ provider, market, settlementStrategyId });
+  const { data: settlementStrategy } = usePerpsGetSettlementStrategy({ provider, perpsMarketId, settlementStrategyId });
   const { data: order } = usePerpsGetOrder({ provider, perpsAccountId });
 
   return useMutation({
@@ -46,8 +44,7 @@ export function usePerpsSettleOrder({
           MulticallContract?.address &&
           PythERC7412WrapperContract?.address &&
           perpsAccountId &&
-          market &&
-          priceIds &&
+          perpsMarketId &&
           settlementStrategy &&
           order
         )
@@ -94,7 +91,7 @@ export function usePerpsSettleOrder({
 
       if (priceUpdated) {
         queryClient.invalidateQueries({
-          queryKey: [chainId, 'PriceUpdateTxn', { priceIds: priceIds?.map((p) => p.slice(0, 8)) }],
+          queryKey: [chainId, 'PriceUpdateTxn'],
         });
       }
 
@@ -102,10 +99,8 @@ export function usePerpsSettleOrder({
         queryKey: [
           chainId,
           'PerpsGetOpenPosition',
-          { market },
           { PerpsMarketProxy: PerpsMarketProxyContract?.address },
-          perpsAccountId,
-          { walletAddress },
+          { walletAddress, perpsAccountId, perpsMarketId },
         ],
       });
       queryClient.invalidateQueries({
