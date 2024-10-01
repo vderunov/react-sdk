@@ -8,34 +8,25 @@ import { fetchPriceUpdateTxn } from './fetchPriceUpdateTxn';
 import { useAllPriceFeeds } from './useAllPriceFeeds';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
-import { useSelectedAccountId } from './useSelectedAccountId';
-import { useSelectedPoolId } from './useSelectedPoolId';
 import { useSynthetix } from './useSynthetix';
 
 export function useDelegateCollateral({
   provider,
   walletAddress,
   collateralTypeTokenAddress,
-  poolIdFromParams,
-  accountIdFromParams,
+  poolId,
+  accountId,
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
   collateralTypeTokenAddress?: string;
-  poolIdFromParams?: string;
-  accountIdFromParams?: string;
+  poolId?: ethers.BigNumber;
+  accountId?: ethers.BigNumber;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
   const errorParser = useErrorParser();
-
-  const accountId = useSelectedAccountId({
-    accountId: accountIdFromParams,
-    provider,
-    walletAddress,
-  });
-  const poolId = useSelectedPoolId({ poolId: poolIdFromParams });
 
   const { data: CoreProxyContract } = useImportContract('CoreProxy');
   const { data: MulticallContract } = useImportContract('Multicall');
