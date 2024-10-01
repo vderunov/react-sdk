@@ -44,3 +44,7 @@ export * from './useSelectedPoolId';
 export * from './fetchAccountAvailableCollateral';
 export * from './useAccounts';
 export * from './useSelectedAccountId';
+export * from './usePerpsCreateAccount';
+export * from './usePerpsGetOpenPosition';
+export * from './usePerpsGetSettlementStrategy';
+export * from './usePerpsSettleOrder';
