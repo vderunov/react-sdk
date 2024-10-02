@@ -1,0 +1,43 @@
+version: 2.1
+
+parameters:
+  node-version:
+    type: string
+    default: '20.17.0'
+
+  cypress-version:
+    type: string
+    default: '13.11.0'
+
+commands:
+  yarn-install:
+    steps:
+      - run: date +"%Y-%m" > /tmp/month.txt && cat /tmp/month.txt
+      - restore_cache:
+          keys:
+            - yarn-{{ .Environment.YARN_CACHE_VERSION }}-{{ checksum "/tmp/month.txt" }}-{{ checksum "yarn.lock" }}
+            - yarn-{{ .Environment.YARN_CACHE_VERSION }}-{{ checksum "/tmp/month.txt" }}-
+      - run: yarn -v
+      - run: yarn install --immutable
+      - save_cache:
+          key: yarn-{{ .Environment.YARN_CACHE_VERSION }}-{{ checksum "/tmp/month.txt" }}-{{ checksum "yarn.lock" }}
+          paths:
+            - '~/.yarn/berry'
+
+jobs:
+  checks:
+    working_directory: /tmp/app
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - yarn-install
+      - run: yarn npm audit
+      - run: yarn dedupe --check
+      - run: yarn tsc
+      - run: yarn lint
+
+workflows:
+  checks:
+    jobs:
+      - checks
