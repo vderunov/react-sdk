@@ -6,7 +6,7 @@ export async function importRewardsDistributors(
     address: string;
     name: string;
     poolId: string;
-    collateralType: {
+    collateralType?: {
       address: string;
       symbol: string;
       name: string;
