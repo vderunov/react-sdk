@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchTokenAllowance({
   provider,
@@ -7,10 +7,14 @@ export async function fetchTokenAllowance({
   spenderAddress,
 }: {
   provider: ethers.providers.BaseProvider;
-  tokenAddress: string;
-  ownerAddress: string;
-  spenderAddress: string;
+  tokenAddress: BigNumberish;
+  ownerAddress: BigNumberish;
+  spenderAddress: BigNumberish;
 }) {
-  const Token = new ethers.Contract(tokenAddress, ['function allowance(address owner, address spender) view returns (uint256)'], provider);
+  const Token = new ethers.Contract(
+    tokenAddress.toString(),
+    ['function allowance(address owner, address spender) view returns (uint256)'],
+    provider
+  );
   return Token.allowance(ownerAddress, spenderAddress);
 }

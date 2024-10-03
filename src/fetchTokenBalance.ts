@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchTokenBalance({
   provider,
@@ -6,9 +6,9 @@ export async function fetchTokenBalance({
   ownerAddress,
 }: {
   provider: ethers.providers.BaseProvider;
-  tokenAddress: string;
-  ownerAddress: string;
+  tokenAddress: BigNumberish;
+  ownerAddress: BigNumberish;
 }) {
-  const Token = new ethers.Contract(tokenAddress, ['function balanceOf(address account) view returns (uint256)'], provider);
+  const Token = new ethers.Contract(tokenAddress.toString(), ['function balanceOf(address account) view returns (uint256)'], provider);
   return Token.balanceOf(ownerAddress);
 }

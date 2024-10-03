@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
@@ -8,7 +8,7 @@ export function usePerpsCreateAccount({
   provider,
   walletAddress,
   handleAccountCreated,
-}: { walletAddress?: string; provider?: ethers.providers.Web3Provider; handleAccountCreated: (accountId: string) => void }) {
+}: { walletAddress?: BigNumberish; provider?: ethers.providers.Web3Provider; handleAccountCreated: (accountId: string) => void }) {
   const { chainId, queryClient } = useSynthetix();
   const errorParser = useErrorParser();
 
@@ -19,7 +19,7 @@ export function usePerpsCreateAccount({
     mutationFn: async () => {
       if (!(chainId && PerpsMarketProxyContract && PerpsAccountProxyContract && walletAddress && provider && queryClient)) throw 'OMFG';
 
-      const signer = provider.getSigner(walletAddress);
+      const signer = provider.getSigner(walletAddress.toString());
       const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, signer);
       const tx: ethers.ContractTransaction = await PerpsMarketProxy['createAccount()']();
       console.log({ tx });

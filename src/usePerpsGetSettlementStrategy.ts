@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
@@ -8,7 +8,7 @@ export function usePerpsGetSettlementStrategy({
   provider,
   settlementStrategyId,
   perpsMarketId,
-}: { settlementStrategyId?: string; provider?: ethers.providers.BaseProvider; perpsMarketId?: string }) {
+}: { settlementStrategyId?: BigNumberish; provider?: ethers.providers.BaseProvider; perpsMarketId?: BigNumberish }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();
 

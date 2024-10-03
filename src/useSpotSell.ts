@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import type { ethers } from 'ethers';
+import type { BigNumberish } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchApproveToken } from './fetchApproveToken';
 import { fetchPriceUpdateTxn } from './fetchPriceUpdateTxn';
 import { fetchSpotSell } from './fetchSpotSell';
@@ -22,10 +23,10 @@ export function useSpotSell({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: string;
-  synthMarketId?: string;
-  settlementStrategyId?: string;
-  synthTokenAddress?: string;
+  walletAddress?: BigNumberish;
+  synthMarketId?: BigNumberish;
+  settlementStrategyId?: BigNumberish;
+  synthTokenAddress?: BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -44,7 +45,7 @@ export function useSpotSell({
   const { data: priceData } = useSpotGetPriceData({ provider, synthMarketId });
 
   return useMutation({
-    mutationFn: async (amount: ethers.BigNumber) => {
+    mutationFn: async (amount: BigNumberish) => {
       if (
         !(
           chainId &&
@@ -64,7 +65,7 @@ export function useSpotSell({
         throw 'OMFG';
       }
 
-      if (amount.lte(0)) {
+      if (ethers.BigNumber.from(amount).lte(0)) {
         throw new Error('Amount required');
       }
 
@@ -91,7 +92,7 @@ export function useSpotSell({
           walletAddress,
           tokenAddress: synthTokenAddress,
           spenderAddress: SpotMarketProxyContract.address,
-          allowance: amount.sub(freshAllowance),
+          allowance: ethers.BigNumber.from(amount).sub(freshAllowance),
         });
       }
 

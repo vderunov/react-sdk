@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { fetchTokenBalance } from './fetchTokenBalance';
 import { useErrorParser } from './useErrorParser';
 import { useSynthetix } from './useSynthetix';
@@ -10,8 +10,8 @@ export function useTokenBalance({
   ownerAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
-  tokenAddress?: string;
-  ownerAddress?: string;
+  tokenAddress?: BigNumberish;
+  ownerAddress?: BigNumberish;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

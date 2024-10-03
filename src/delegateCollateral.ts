@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function delegateCollateral({
   provider,
@@ -10,14 +10,14 @@ export async function delegateCollateral({
   delegateAmount,
 }: {
   provider: ethers.providers.Web3Provider;
-  walletAddress: string;
+  walletAddress: BigNumberish;
   CoreProxyContract: { address: string; abi: string[] };
-  accountId: ethers.BigNumber;
-  poolId: ethers.BigNumber;
-  tokenAddress: string;
-  delegateAmount: ethers.BigNumber;
+  accountId: BigNumberish;
+  poolId: BigNumberish;
+  tokenAddress: BigNumberish;
+  delegateAmount: BigNumberish;
 }) {
-  const signer = provider.getSigner(walletAddress);
+  const signer = provider.getSigner(walletAddress.toString());
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, signer);
 
   const delegateCollateralTxnArgs = [

@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchWithdrawCollateralWithPriceUpdate({
   provider,
@@ -11,16 +11,16 @@ export async function fetchWithdrawCollateralWithPriceUpdate({
   priceUpdateTxn,
 }: {
   provider: ethers.providers.Web3Provider;
-  walletAddress: string;
+  walletAddress: BigNumberish;
   CoreProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
-  accountId: ethers.BigNumber;
-  tokenAddress: string;
-  withdrawAmount: ethers.BigNumber;
+  accountId: BigNumberish;
+  tokenAddress: BigNumberish;
+  withdrawAmount: BigNumberish;
   priceUpdateTxn: {
-    target: string;
-    callData: string;
-    value: number;
+    target: BigNumberish;
+    callData: BigNumberish;
+    value: BigNumberish;
     requireSuccess: boolean;
   };
 }) {
@@ -46,10 +46,10 @@ export async function fetchWithdrawCollateralWithPriceUpdate({
   };
   console.log({ withdrawCollateralTxn });
 
-  const signer = provider.getSigner(walletAddress);
+  const signer = provider.getSigner(walletAddress.toString());
 
   const multicallTxn = {
-    from: walletAddress,
+    from: walletAddress.toString(),
     to: MulticallContract.address,
     data: MulticallInterface.encodeFunctionData('aggregate3Value', [[priceUpdateTxn, withdrawCollateralTxn]]),
     value: priceUpdateTxn.value,

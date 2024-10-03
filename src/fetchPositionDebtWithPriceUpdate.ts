@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchPositionDebtWithPriceUpdate({
   provider,
@@ -12,13 +12,13 @@ export async function fetchPositionDebtWithPriceUpdate({
   provider: ethers.providers.Web3Provider;
   CoreProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
-  accountId: ethers.BigNumber;
-  poolId: ethers.BigNumber;
-  tokenAddress: string;
+  accountId: BigNumberish;
+  poolId: BigNumberish;
+  tokenAddress: BigNumberish;
   priceUpdateTxn: {
-    target: string;
-    callData: string;
-    value: number;
+    target: BigNumberish;
+    callData: BigNumberish;
+    value: BigNumberish;
     requireSuccess: boolean;
   };
 }) {

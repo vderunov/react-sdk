@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchPerpsSettleOrderWithPriceUpdate({
   provider,
@@ -9,14 +9,14 @@ export async function fetchPerpsSettleOrderWithPriceUpdate({
   priceUpdateTxn,
 }: {
   provider: ethers.providers.Web3Provider;
-  walletAddress?: string;
+  walletAddress: BigNumberish;
   PerpsMarketProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
-  perpsAccountId: ethers.BigNumber;
+  perpsAccountId: BigNumberish;
   priceUpdateTxn: {
-    target: string;
-    callData: string;
-    value: ethers.BigNumber;
+    target: BigNumberish;
+    callData: BigNumberish;
+    value: BigNumberish;
     requireSuccess: boolean;
   };
 }) {
@@ -31,10 +31,10 @@ export async function fetchPerpsSettleOrderWithPriceUpdate({
   };
   console.log({ settleOrderTxn });
 
-  const signer = provider.getSigner(walletAddress);
+  const signer = provider.getSigner(walletAddress.toString());
 
   const multicallTxn = {
-    from: walletAddress,
+    from: walletAddress.toString(),
     to: MulticallContract.address,
     data: MulticallInterface.encodeFunctionData('aggregate3Value', [[priceUpdateTxn, settleOrderTxn]]),
     value: priceUpdateTxn.value,

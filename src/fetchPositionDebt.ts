@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchPositionDebt({
   provider,
@@ -9,9 +9,9 @@ export async function fetchPositionDebt({
 }: {
   provider: ethers.providers.Web3Provider;
   CoreProxyContract: { address: string; abi: string[] };
-  accountId: ethers.BigNumber;
-  poolId: ethers.BigNumber;
-  tokenAddress: string;
+  accountId: BigNumberish;
+  poolId: BigNumberish;
+  tokenAddress: BigNumberish;
 }) {
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, provider);
   console.time('fetchPositionDebt');

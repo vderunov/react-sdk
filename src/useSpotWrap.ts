@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import type { ethers } from 'ethers';
+import type { BigNumberish } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchApproveToken } from './fetchApproveToken';
 import { fetchPriceUpdateTxn } from './fetchPriceUpdateTxn';
 import { fetchSpotWrap } from './fetchSpotWrap';
@@ -22,11 +23,11 @@ export function useSpotWrap({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: string;
-  tokenAddress?: string;
-  synthTokenAddress?: string;
-  synthMarketId?: string;
-  settlementStrategyId?: string;
+  walletAddress?: BigNumberish;
+  tokenAddress?: BigNumberish;
+  synthTokenAddress?: BigNumberish;
+  synthMarketId?: BigNumberish;
+  settlementStrategyId?: BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -44,7 +45,7 @@ export function useSpotWrap({
   });
 
   return useMutation({
-    mutationFn: async (amount: ethers.BigNumber) => {
+    mutationFn: async (amount: BigNumberish) => {
       if (
         !(
           chainId &&
@@ -62,7 +63,7 @@ export function useSpotWrap({
         throw 'OMFG';
       }
 
-      if (amount.lte(0)) {
+      if (ethers.BigNumber.from(amount).lte(0)) {
         throw new Error('Amount required');
       }
 
@@ -89,7 +90,7 @@ export function useSpotWrap({
           walletAddress,
           tokenAddress,
           spenderAddress: SpotMarketProxyContract.address,
-          allowance: amount.sub(freshAllowance),
+          allowance: ethers.BigNumber.from(amount).sub(freshAllowance),
         });
       }
 

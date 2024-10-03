@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import type { ethers } from 'ethers';
+import type { BigNumberish } from 'ethers';
+import { ethers } from 'ethers';
 import { depositCollateral } from './depositCollateral';
 import { fetchApproveToken } from './fetchApproveToken';
 import { fetchTokenAllowance } from './fetchTokenAllowance';
@@ -17,10 +18,10 @@ export function useDeposit({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: string;
-  accountId?: ethers.BigNumber;
-  poolId?: ethers.BigNumber;
-  collateralTypeTokenAddress?: string;
+  walletAddress?: BigNumberish;
+  accountId?: BigNumberish;
+  poolId?: BigNumberish;
+  collateralTypeTokenAddress?: BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -29,12 +30,12 @@ export function useDeposit({
   const { data: CoreProxyContract } = useImportContract('CoreProxy');
 
   return useMutation({
-    mutationFn: async (depositAmount: ethers.BigNumber) => {
+    mutationFn: async (depositAmount: BigNumberish) => {
       if (!(chainId && provider && CoreProxyContract && walletAddress && accountId && poolId && collateralTypeTokenAddress)) {
         throw 'OMFG';
       }
 
-      if (depositAmount.lte(0)) {
+      if (ethers.BigNumber.from(depositAmount).lte(0)) {
         throw new Error('Amount required');
       }
 
@@ -63,7 +64,7 @@ export function useDeposit({
           walletAddress,
           tokenAddress: collateralTypeTokenAddress,
           spenderAddress: CoreProxyContract.address,
-          allowance: depositAmount.sub(freshAllowance),
+          allowance: ethers.BigNumber.from(depositAmount).sub(freshAllowance),
         });
       }
 
@@ -92,7 +93,7 @@ export function useDeposit({
           'AccountAvailableCollateral',
           { CoreProxy: CoreProxyContract?.address },
           {
-            accountId: accountId?.toHexString(),
+            accountId: ethers.BigNumber.from(accountId).toHexString(),
             tokenAddress: collateralTypeTokenAddress,
           },
         ],
@@ -103,8 +104,8 @@ export function useDeposit({
           'PositionCollateral',
           { CoreProxy: CoreProxyContract?.address },
           {
-            accountId: accountId?.toHexString(),
-            poolId: poolId?.toHexString(),
+            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            poolId: ethers.BigNumber.from(poolId).toHexString(),
             tokenAddress: collateralTypeTokenAddress,
           },
         ],

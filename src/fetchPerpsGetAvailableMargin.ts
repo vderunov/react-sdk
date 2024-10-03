@@ -1,12 +1,12 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchPerpsGetAvailableMargin({
   provider,
   perpsAccountId,
   PerpsMarketProxyContract,
 }: {
-  provider?: ethers.providers.BaseProvider;
-  perpsAccountId: ethers.BigNumber;
+  provider: ethers.providers.BaseProvider;
+  perpsAccountId: BigNumberish;
   PerpsMarketProxyContract: { address: string; abi: string[] };
 }) {
   const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, provider);

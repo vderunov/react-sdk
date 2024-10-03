@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { useErrorParser } from './useErrorParser';
 import { useImportWethContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
@@ -12,9 +12,9 @@ export function useWethDeposit({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: string;
-  perpsAccountId?: ethers.BigNumber;
-  tokenAddress?: string;
+  walletAddress?: BigNumberish;
+  perpsAccountId?: BigNumberish;
+  tokenAddress?: BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -24,12 +24,12 @@ export function useWethDeposit({
   const errorParser = useErrorParser();
 
   return useMutation({
-    mutationFn: async (amount: ethers.BigNumber) => {
+    mutationFn: async (amount: BigNumberish) => {
       if (!(chainId && provider && walletAddress && perpsAccountId && WethContract)) {
         throw 'OMFG';
       }
 
-      const signer = provider.getSigner(walletAddress);
+      const signer = provider.getSigner(walletAddress.toString());
       const Weth = new ethers.Contract(WethContract.address, WethContract.abi, signer);
       const tx = await Weth.deposit({
         value: amount,

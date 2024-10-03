@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { fetchApproveToken } from './fetchApproveToken';
 import { fetchTokenAllowance } from './fetchTokenAllowance';
 import { fetchTokenBalance } from './fetchTokenBalance';
@@ -13,7 +13,7 @@ export function usePerpsModifyCollateral({
   provider,
   walletAddress,
   perpsAccountId,
-}: { provider?: ethers.providers.Web3Provider; walletAddress?: string; perpsAccountId?: ethers.BigNumber }) {
+}: { provider?: ethers.providers.Web3Provider; walletAddress?: BigNumberish; perpsAccountId?: BigNumberish }) {
   const { chainId, queryClient } = useSynthetix();
   const errorParser = useErrorParser();
   const { data: systemToken } = useImportSystemToken();
@@ -21,11 +21,11 @@ export function usePerpsModifyCollateral({
   const { data: PerpsMarketProxyContract } = useImportContract('PerpsMarketProxy');
 
   return useMutation({
-    mutationFn: async (depositAmount: ethers.BigNumber) => {
+    mutationFn: async (depositAmount: BigNumberish) => {
       if (!(chainId && provider && PerpsMarketProxyContract?.address && walletAddress && perpsAccountId && systemToken)) {
         throw 'OMFG';
       }
-      if (depositAmount.lte(0)) {
+      if (ethers.BigNumber.from(depositAmount).lte(0)) {
         throw new Error('Amount required');
       }
 
@@ -54,11 +54,11 @@ export function usePerpsModifyCollateral({
           walletAddress,
           tokenAddress: systemToken.address,
           spenderAddress: PerpsMarketProxyContract.address,
-          allowance: depositAmount.sub(freshAllowance),
+          allowance: ethers.BigNumber.from(depositAmount).sub(freshAllowance),
         });
       }
 
-      const signer = provider.getSigner(walletAddress);
+      const signer = provider.getSigner(walletAddress.toString());
       const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, signer);
 
       const modifyCollateralTxnArgs = [perpsAccountId, USDx_MARKET_ID, depositAmount];

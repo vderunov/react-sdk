@@ -1,13 +1,13 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchPerpsTotalCollateralValue({
   provider,
   PerpsMarketProxyContract,
   perpsAccountId,
 }: {
-  provider?: ethers.providers.BaseProvider;
+  provider: ethers.providers.BaseProvider;
   PerpsMarketProxyContract: { address: string; abi: string[] };
-  perpsAccountId: ethers.BigNumber;
+  perpsAccountId: BigNumberish;
 }) {
   const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, provider);
   console.time('fetchPerpsTotalCollateralValue');

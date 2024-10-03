@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
@@ -9,7 +9,7 @@ export function useAccountLastInteraction({
   accountId,
 }: {
   provider?: ethers.providers.BaseProvider;
-  accountId?: ethers.BigNumber;
+  accountId?: BigNumberish;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();
@@ -18,7 +18,12 @@ export function useAccountLastInteraction({
 
   return useQuery({
     enabled: Boolean(chainId && provider && CoreProxyContract?.address && accountId),
-    queryKey: [chainId, 'AccountLastInteraction', { CoreProxy: CoreProxyContract?.address }, { accountId: accountId?.toHexString() }],
+    queryKey: [
+      chainId,
+      'AccountLastInteraction',
+      { CoreProxy: CoreProxyContract?.address },
+      { accountId: ethers.BigNumber.from(accountId).toHexString() },
+    ],
     queryFn: async () => {
       if (!(chainId && provider && CoreProxyContract?.address && accountId)) {
         throw 'OMFG';

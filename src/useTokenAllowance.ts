@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { fetchTokenAllowance } from './fetchTokenAllowance';
 import { useErrorParser } from './useErrorParser';
 import { useSynthetix } from './useSynthetix';
@@ -11,9 +11,9 @@ export function useTokenAllowance({
   spenderAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
-  tokenAddress?: string;
-  ownerAddress?: string;
-  spenderAddress?: string;
+  tokenAddress?: BigNumberish;
+  ownerAddress?: BigNumberish;
+  spenderAddress?: BigNumberish;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

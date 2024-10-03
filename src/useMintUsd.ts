@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import type { ethers } from 'ethers';
+import type { BigNumberish } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchMintUsd } from './fetchMintUsd';
 import { fetchMintUsdWithPriceUpdate } from './fetchMintUsdWithPriceUpdate';
 import { useErrorParser } from './useErrorParser';
@@ -16,10 +17,10 @@ export function useMintUsd({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: string;
-  accountId?: ethers.BigNumber;
-  collateralTokenAddress?: string;
-  poolId?: ethers.BigNumber;
+  walletAddress?: BigNumberish;
+  accountId?: BigNumberish;
+  collateralTokenAddress?: BigNumberish;
+  poolId?: BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -34,7 +35,7 @@ export function useMintUsd({
 
   return useMutation({
     retry: false,
-    mutationFn: async (mintUsdAmount: ethers.BigNumber) => {
+    mutationFn: async (mintUsdAmount: BigNumberish) => {
       if (
         !(
           chainId &&
@@ -51,7 +52,7 @@ export function useMintUsd({
         throw 'OMFG';
       }
 
-      if (mintUsdAmount.eq(0)) {
+      if (ethers.BigNumber.from(mintUsdAmount).eq(0)) {
         throw new Error('Amount required');
       }
 
@@ -105,7 +106,7 @@ export function useMintUsd({
           'PositionDebt',
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
-            accountId: accountId?.toHexString(),
+            accountId: ethers.BigNumber.from(accountId).toHexString(),
             tokenAddress: collateralTokenAddress,
           },
         ],
@@ -116,13 +117,18 @@ export function useMintUsd({
           'AccountAvailableCollateral',
           { CoreProxy: CoreProxyContract?.address },
           {
-            accountId: accountId?.toHexString(),
+            accountId: ethers.BigNumber.from(accountId).toHexString(),
             tokenAddress: systemToken?.address,
           },
         ],
       });
       queryClient.invalidateQueries({
-        queryKey: [chainId, 'AccountLastInteraction', { CoreProxy: CoreProxyContract?.address }, { accountId: accountId?.toHexString() }],
+        queryKey: [
+          chainId,
+          'AccountLastInteraction',
+          { CoreProxy: CoreProxyContract?.address },
+          { accountId: ethers.BigNumber.from(accountId).toHexString() },
+        ],
       });
 
       onSuccess();

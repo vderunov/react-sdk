@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchPerpsSettleOrder({
   provider,
@@ -7,11 +7,11 @@ export async function fetchPerpsSettleOrder({
   perpsAccountId,
 }: {
   provider: ethers.providers.Web3Provider;
-  walletAddress: string;
+  walletAddress: BigNumberish;
   PerpsMarketProxyContract: { address: string; abi: string[] };
-  perpsAccountId: ethers.BigNumber;
+  perpsAccountId: BigNumberish;
 }) {
-  const signer = provider.getSigner(walletAddress);
+  const signer = provider.getSigner(walletAddress.toString());
   const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, signer);
 
   console.time('fetchPerpsSettleOrder');

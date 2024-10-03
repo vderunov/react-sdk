@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchPerpsGetMarketSummaryWithPriceUpdate({
   provider,
@@ -8,13 +8,13 @@ export async function fetchPerpsGetMarketSummaryWithPriceUpdate({
   priceUpdateTxn,
 }: {
   provider: ethers.providers.BaseProvider;
-  perpsMarketId: ethers.BigNumber;
+  perpsMarketId: BigNumberish;
   PerpsMarketProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
   priceUpdateTxn: {
-    target: string;
-    callData: string;
-    value: number;
+    target: BigNumberish;
+    callData: BigNumberish;
+    value: BigNumberish;
     requireSuccess: boolean;
   };
 }): Promise<{

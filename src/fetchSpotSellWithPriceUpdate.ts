@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchSpotSellWithPriceUpdate({
   provider,
@@ -10,15 +10,15 @@ export async function fetchSpotSellWithPriceUpdate({
   priceUpdateTxn,
 }: {
   provider: ethers.providers.Web3Provider;
-  walletAddress: string;
+  walletAddress: BigNumberish;
   SpotMarketProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
-  synthMarketId: string;
-  amount: ethers.BigNumber;
+  synthMarketId: BigNumberish;
+  amount: BigNumberish;
   priceUpdateTxn: {
-    target: string;
-    callData: string;
-    value: number;
+    target: BigNumberish;
+    callData: BigNumberish;
+    value: BigNumberish;
     requireSuccess: boolean;
   };
 }) {
@@ -37,10 +37,10 @@ export async function fetchSpotSellWithPriceUpdate({
   };
   console.log({ sellTnx });
 
-  const signer = provider.getSigner(walletAddress);
+  const signer = provider.getSigner(walletAddress.toString());
 
   const multicallTxn = {
-    from: walletAddress,
+    from: walletAddress.toString(),
     to: MulticallContract.address,
     data: MulticallInterface.encodeFunctionData('aggregate3Value', [[priceUpdateTxn, sellTnx]]),
     value: priceUpdateTxn.value,

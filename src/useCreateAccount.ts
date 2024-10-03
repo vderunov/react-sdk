@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
 
@@ -7,7 +7,7 @@ export function useCreateAccount({
   provider,
   walletAddress,
   handleAccountCreated,
-}: { provider?: ethers.providers.Web3Provider; walletAddress?: string; handleAccountCreated: (accountId: string) => void }) {
+}: { provider?: ethers.providers.Web3Provider; walletAddress?: BigNumberish; handleAccountCreated: (accountId: string) => void }) {
   const { chainId, queryClient } = useSynthetix();
 
   const { data: CoreProxyContract } = useImportContract('CoreProxy');
@@ -17,7 +17,7 @@ export function useCreateAccount({
     mutationFn: async () => {
       if (!(chainId && provider && CoreProxyContract && AccountProxyContract && walletAddress && queryClient)) throw 'OMFG';
 
-      const signer = provider.getSigner(walletAddress);
+      const signer = provider.getSigner(walletAddress.toString());
       const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, signer);
       const tx: ethers.ContractTransaction = await CoreProxy['createAccount()']();
       console.log({ tx });

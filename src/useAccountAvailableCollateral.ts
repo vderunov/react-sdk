@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { fetchAccountAvailableCollateral } from './fetchAccountAvailableCollateral';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
@@ -11,8 +11,8 @@ export function useAccountAvailableCollateral({
   tokenAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
-  accountId?: ethers.BigNumber;
-  tokenAddress?: string;
+  accountId?: BigNumberish;
+  tokenAddress?: BigNumberish;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();
@@ -25,7 +25,7 @@ export function useAccountAvailableCollateral({
       chainId,
       'AccountAvailableCollateral',
       { CoreProxy: CoreProxyContract?.address },
-      { accountId: accountId?.toHexString(), tokenAddress },
+      { accountId: ethers.BigNumber.from(accountId).toHexString(), tokenAddress },
     ],
     queryFn: async () => {
       if (!(chainId && provider && CoreProxyContract?.address && accountId && tokenAddress)) {

@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchCollateralPrice({
   provider,
@@ -7,7 +7,7 @@ export async function fetchCollateralPrice({
 }: {
   provider: ethers.providers.Web3Provider;
   CoreProxyContract: { address: string; abi: string[] };
-  tokenAddress: string;
+  tokenAddress: BigNumberish;
 }) {
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, provider);
   console.time('fetchCollateralPrice');

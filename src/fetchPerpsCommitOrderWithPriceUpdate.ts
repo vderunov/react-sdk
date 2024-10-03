@@ -1,30 +1,30 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchPerpsCommitOrderWithPriceUpdate({
-  walletAddress,
   provider,
+  walletAddress,
   PerpsMarketProxyContract,
   MulticallContract,
   orderCommitmentArgs,
   priceUpdateTxn,
 }: {
-  walletAddress?: string;
   provider: ethers.providers.Web3Provider;
+  walletAddress: BigNumberish;
   PerpsMarketProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
   orderCommitmentArgs: {
-    perpsMarketId: string;
-    perpsAccountId: ethers.BigNumber;
-    sizeDelta: ethers.BigNumber;
-    settlementStrategyId: string;
-    acceptablePrice: ethers.BigNumber;
-    referrer: string;
-    trackingCode: string;
+    perpsMarketId: BigNumberish;
+    perpsAccountId: BigNumberish;
+    sizeDelta: BigNumberish;
+    settlementStrategyId: BigNumberish;
+    acceptablePrice: BigNumberish;
+    referrer: BigNumberish;
+    trackingCode: BigNumberish;
   };
   priceUpdateTxn: {
-    target: string;
-    callData: string;
-    value: number;
+    target: BigNumberish;
+    callData: BigNumberish;
+    value: BigNumberish;
     requireSuccess: boolean;
   };
 }) {
@@ -48,10 +48,10 @@ export async function fetchPerpsCommitOrderWithPriceUpdate({
     requireSuccess: true,
   };
   console.log({ commitOrderTxn });
-  const signer = provider.getSigner(walletAddress);
+  const signer = provider.getSigner(walletAddress.toString());
 
   const multicallTxn = {
-    from: walletAddress,
+    from: walletAddress.toString(),
     to: MulticallContract.address,
     data: MulticallInterface.encodeFunctionData('aggregate3Value', [[priceUpdateTxn, commitOrderTxn]]),
     value: priceUpdateTxn.value,

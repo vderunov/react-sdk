@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
@@ -9,7 +9,7 @@ export function usePerpsAccounts({
   walletAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
-  walletAddress?: string;
+  walletAddress?: BigNumberish;
 }) {
   const { chainId } = useSynthetix();
   const { data: PerpsAccountProxyContract } = useImportContract('PerpsAccountProxy');

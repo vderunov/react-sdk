@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import { fetchCollateralPrice } from './fetchCollateralPrice';
 import { fetchCollateralPriceWithPriceUpdate } from './fetchCollateralPriceWithPriceUpdate';
 import { useErrorParser } from './useErrorParser';
@@ -12,7 +12,7 @@ export function useCollateralPrice({
   tokenAddress,
 }: {
   provider?: ethers.providers.Web3Provider;
-  tokenAddress?: string;
+  tokenAddress?: BigNumberish;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();
@@ -22,7 +22,7 @@ export function useCollateralPrice({
   const { data: CoreProxyContract } = useImportContract('CoreProxy');
   const { data: MulticallContract } = useImportContract('Multicall');
 
-  return useQuery({
+  return useQuery<ethers.BigNumber>({
     enabled: Boolean(chainId && provider && CoreProxyContract?.address && MulticallContract?.address && tokenAddress && priceUpdateTxn),
     queryKey: [
       chainId,

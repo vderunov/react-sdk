@@ -1,5 +1,5 @@
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchPriceUpdateTxn({
   provider,
@@ -11,8 +11,8 @@ export async function fetchPriceUpdateTxn({
   provider: ethers.providers.BaseProvider;
   MulticallContract: { address: string; abi: string[] };
   PythERC7412WrapperContract: { address: string; abi: string[] };
-  priceIds: string[];
-  stalenessTolerance?: ethers.BigNumber;
+  priceIds: BigNumberish[];
+  stalenessTolerance?: BigNumberish;
 }) {
   console.time('fetchPriceUpdateTxn');
   const defaultStalenessTolerance = 1800; // half of 3600 required tolerance
@@ -20,7 +20,10 @@ export async function fetchPriceUpdateTxn({
 
   const MulticallInterface = new ethers.utils.Interface(MulticallContract.abi);
   const PythERC7412WrapperInterface = new ethers.utils.Interface(PythERC7412WrapperContract.abi);
-  const txs = priceIds.map((priceId) => ({
+
+  const priceIdsHex = priceIds.map((priceId) => ethers.BigNumber.from(priceId).toHexString());
+
+  const txs = priceIdsHex.map((priceId) => ({
     target: PythERC7412WrapperContract.address,
     callData: PythERC7412WrapperInterface.encodeFunctionData('getLatestPrice', [priceId, stalenessTolerance]),
     value: 0,
@@ -32,7 +35,7 @@ export async function fetchPriceUpdateTxn({
     data: MulticallInterface.encodeFunctionData('aggregate3Value', [txs]),
   });
   const [latestPrices] = MulticallInterface.decodeFunctionResult('aggregate3Value', result);
-  const stalePriceIds = priceIds.filter((_priceId, i) => !latestPrices[i].success);
+  const stalePriceIds = priceIdsHex.filter((_priceId, i) => !latestPrices[i].success);
   if (stalePriceIds.length < 1) {
     return {
       target: PythERC7412WrapperContract.address,

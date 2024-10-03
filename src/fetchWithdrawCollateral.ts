@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 
 export async function fetchWithdrawCollateral({
   provider,
@@ -9,13 +9,13 @@ export async function fetchWithdrawCollateral({
   withdrawAmount,
 }: {
   provider: ethers.providers.Web3Provider;
-  walletAddress: string;
+  walletAddress: BigNumberish;
   CoreProxyContract: { address: string; abi: string[] };
-  accountId: ethers.BigNumber;
-  tokenAddress: string;
-  withdrawAmount: ethers.BigNumber;
+  accountId: BigNumberish;
+  tokenAddress: BigNumberish;
+  withdrawAmount: BigNumberish;
 }) {
-  const signer = provider.getSigner(walletAddress);
+  const signer = provider.getSigner(walletAddress.toString());
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, signer);
 
   const withdrawCollateralTxnArgs = [

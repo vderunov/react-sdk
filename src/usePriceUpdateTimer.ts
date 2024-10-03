@@ -1,15 +1,17 @@
-import { ethers } from 'ethers';
+import { type BigNumberish, ethers } from 'ethers';
 import React from 'react';
 
 export function usePriceUpdateTimer({
   commitmentTime,
   settlementWindowDuration,
 }: {
-  commitmentTime?: ethers.BigNumber;
-  settlementWindowDuration?: ethers.BigNumber;
+  commitmentTime?: BigNumberish;
+  settlementWindowDuration?: BigNumberish;
 }) {
   const localSettlementWindowDuration = settlementWindowDuration ?? ethers.BigNumber.from(0);
-  const unlockUnixtime = commitmentTime ? commitmentTime.add(localSettlementWindowDuration) : ethers.BigNumber.from(0);
+  const unlockUnixtime = commitmentTime
+    ? ethers.BigNumber.from(commitmentTime).add(localSettlementWindowDuration)
+    : ethers.BigNumber.from(0);
 
   const [h, setH] = React.useState(0);
   const [m, setM] = React.useState(0);

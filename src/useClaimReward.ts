@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import type { ethers } from 'ethers';
+import type { BigNumberish } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchAccountAvailableCollateral } from './fetchAccountAvailableCollateral';
 import { fetchPriceUpdateTxn } from './fetchPriceUpdateTxn';
 import { fetchWithdrawCollateral } from './fetchWithdrawCollateral';
@@ -17,9 +18,9 @@ export function useClaimReward({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: string;
-  tokenAddress?: string;
-  accountId?: ethers.BigNumber;
+  walletAddress?: BigNumberish;
+  tokenAddress?: BigNumberish;
+  accountId?: BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -33,7 +34,7 @@ export function useClaimReward({
 
   return useMutation({
     retry: false,
-    mutationFn: async (withdrawAmount: ethers.BigNumber) => {
+    mutationFn: async (withdrawAmount: BigNumberish) => {
       if (
         !(
           chainId &&
@@ -50,7 +51,7 @@ export function useClaimReward({
         throw 'OMFG';
       }
 
-      if (withdrawAmount.eq(0)) {
+      if (ethers.BigNumber.from(withdrawAmount).eq(0)) {
         throw new Error('Amount required');
       }
 
@@ -122,7 +123,7 @@ export function useClaimReward({
           'AccountCollateral',
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
-            accountId: accountId?.toHexString(),
+            accountId: ethers.BigNumber.from(accountId).toHexString(),
             tokenAddress,
           },
         ],
@@ -133,7 +134,7 @@ export function useClaimReward({
           'AccountAvailableCollateral',
           { CoreProxy: CoreProxyContract?.address },
           {
-            accountId: accountId?.toHexString(),
+            accountId: ethers.BigNumber.from(accountId).toHexString(),
             tokenAddress,
           },
         ],
