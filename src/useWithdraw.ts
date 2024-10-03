@@ -1,60 +1,56 @@
 import { useMutation } from '@tanstack/react-query';
 import type { ethers } from 'ethers';
-import { delegateCollateral } from './delegateCollateral';
-import { delegateCollateralWithPriceUpdate } from './delegateCollateralWithPriceUpdate';
 import { fetchAccountAvailableCollateral } from './fetchAccountAvailableCollateral';
-import { fetchPositionCollateral } from './fetchPositionCollateral';
 import { fetchPriceUpdateTxn } from './fetchPriceUpdateTxn';
+import { fetchWithdrawCollateral } from './fetchWithdrawCollateral';
+import { fetchWithdrawCollateralWithPriceUpdate } from './fetchWithdrawCollateralWithPriceUpdate';
 import { useAllPriceFeeds } from './useAllPriceFeeds';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
 
-export function useDelegateCollateral({
+export function useWithdraw({
   provider,
   walletAddress,
-  collateralTypeTokenAddress,
-  poolId,
   accountId,
+  tokenAddress,
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  collateralTypeTokenAddress?: string;
-  poolId?: ethers.BigNumber;
   accountId?: ethers.BigNumber;
+  tokenAddress?: string;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
   const errorParser = useErrorParser();
 
+  const { data: priceIds } = useAllPriceFeeds();
+
   const { data: CoreProxyContract } = useImportContract('CoreProxy');
   const { data: MulticallContract } = useImportContract('Multicall');
   const { data: PythERC7412WrapperContract } = useImportContract('PythERC7412Wrapper');
 
-  const { data: priceIds } = useAllPriceFeeds();
-
   return useMutation({
     retry: false,
-    mutationFn: async (delegateAmountDelta: ethers.BigNumber) => {
+    mutationFn: async (withdrawAmount: ethers.BigNumber) => {
       if (
         !(
           chainId &&
-          CoreProxyContract &&
-          MulticallContract &&
-          PythERC7412WrapperContract &&
-          priceIds &&
           provider &&
           walletAddress &&
           accountId &&
-          poolId &&
-          collateralTypeTokenAddress
+          tokenAddress &&
+          CoreProxyContract &&
+          MulticallContract &&
+          PythERC7412WrapperContract &&
+          priceIds
         )
       ) {
         throw 'OMFG';
       }
 
-      if (delegateAmountDelta.eq(0)) {
+      if (withdrawAmount.eq(0)) {
         throw new Error('Amount required');
       }
 
@@ -70,54 +66,39 @@ export function useDelegateCollateral({
         provider,
         CoreProxyContract,
         accountId,
-        tokenAddress: collateralTypeTokenAddress,
+        tokenAddress,
       });
       console.log('freshAccountAvailableCollateral', freshAccountAvailableCollateral);
 
-      const hasEnoughDeposit = freshAccountAvailableCollateral.gte(delegateAmountDelta);
+      const hasEnoughDeposit = freshAccountAvailableCollateral.gte(withdrawAmount);
       if (!hasEnoughDeposit) {
-        throw new Error('Not enough deposit');
+        throw new Error('Not enough unlocked collateral');
       }
 
-      const freshPositionCollateral = await fetchPositionCollateral({
-        provider,
-        CoreProxyContract,
-        accountId,
-        poolId,
-        tokenAddress: collateralTypeTokenAddress,
-      });
-      console.log('freshPositionCollateral', freshPositionCollateral);
-
-      const delegateAmount = freshPositionCollateral.add(delegateAmountDelta);
-      console.log('delegateAmount', delegateAmount);
-
       if (freshPriceUpdateTxn.value) {
-        console.log('-> delegateCollateralWithPriceUpdate');
-        await delegateCollateralWithPriceUpdate({
+        console.log('-> withdrawCollateralWithPriceUpdate');
+        await fetchWithdrawCollateralWithPriceUpdate({
           provider,
           walletAddress,
           CoreProxyContract,
           MulticallContract,
           accountId,
-          poolId,
-          tokenAddress: collateralTypeTokenAddress,
-          delegateAmount,
+          tokenAddress,
+          withdrawAmount,
           priceUpdateTxn: freshPriceUpdateTxn,
         });
-        return { priceUpdated: true };
+      } else {
+        console.log('-> withdrawCollateral');
+        await fetchWithdrawCollateral({
+          provider,
+          walletAddress,
+          CoreProxyContract,
+          accountId,
+          tokenAddress,
+          withdrawAmount,
+        });
       }
-      console.log('-> delegateCollateral');
-      await delegateCollateral({
-        provider,
-        walletAddress,
-        CoreProxyContract,
-        accountId,
-        poolId,
-        tokenAddress: collateralTypeTokenAddress,
-        delegateAmount,
-      });
-
-      return { priceUpdated: false };
+      return { priceUpdated: true };
     },
     throwOnError: (error) => {
       // TODO: show toast
@@ -141,7 +122,7 @@ export function useDelegateCollateral({
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
             accountId: accountId?.toHexString(),
-            tokenAddress: collateralTypeTokenAddress,
+            tokenAddress,
           },
         ],
       });
@@ -152,30 +133,17 @@ export function useDelegateCollateral({
           { CoreProxy: CoreProxyContract?.address },
           {
             accountId: accountId?.toHexString(),
-            tokenAddress: collateralTypeTokenAddress,
+            tokenAddress,
           },
         ],
       });
       queryClient.invalidateQueries({
         queryKey: [
           chainId,
-          'PositionCollateral',
-          { CoreProxy: CoreProxyContract?.address },
+          'Balance',
           {
-            accountId: accountId?.toHexString(),
-            poolId: poolId?.toHexString(),
-            tokenAddress: collateralTypeTokenAddress,
-          },
-        ],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [
-          chainId,
-          'PositionDebt',
-          { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
-          {
-            accountId: accountId?.toHexString(),
-            tokenAddress: collateralTypeTokenAddress,
+            tokenAddress,
+            ownerAddress: walletAddress,
           },
         ],
       });

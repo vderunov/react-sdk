@@ -83,13 +83,15 @@ export function usePerpsCommitOrder({
 
       const orderCommitmentArgs = {
         perpsMarketId,
-        accountId: perpsAccountId,
+        perpsAccountId,
         sizeDelta,
         settlementStrategyId,
         acceptablePrice: ethers.utils.parseEther(Math.floor(pythPrice * (sizeDelta.gt(0) ? 1.05 : 0.95)).toString()),
         referrer: ethers.constants.AddressZero,
         trackingCode: ethers.utils.formatBytes32String('VD'),
       };
+
+      console.log({ orderCommitmentArgs });
 
       console.log('priceUpdateTxn', priceUpdateTxn);
 

@@ -1,32 +1,33 @@
 import { useMutation } from '@tanstack/react-query';
 import type { ethers } from 'ethers';
-import { delegateCollateral } from './delegateCollateral';
-import { delegateCollateralWithPriceUpdate } from './delegateCollateralWithPriceUpdate';
 import { fetchAccountAvailableCollateral } from './fetchAccountAvailableCollateral';
-import { fetchPositionCollateral } from './fetchPositionCollateral';
+import { fetchBurnUsd } from './fetchBurnUsd';
+import { fetchBurnUsdWithPriceUpdate } from './fetchBurnUsdWithPriceUpdate';
 import { fetchPriceUpdateTxn } from './fetchPriceUpdateTxn';
 import { useAllPriceFeeds } from './useAllPriceFeeds';
 import { useErrorParser } from './useErrorParser';
-import { useImportContract } from './useImports';
+import { useImportContract, useImportSystemToken } from './useImports';
 import { useSynthetix } from './useSynthetix';
 
-export function useDelegateCollateral({
+export function useBurnUsd({
   provider,
   walletAddress,
+  accountId,
   collateralTypeTokenAddress,
   poolId,
-  accountId,
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
+  accountId?: ethers.BigNumber;
   collateralTypeTokenAddress?: string;
   poolId?: ethers.BigNumber;
-  accountId?: ethers.BigNumber;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
   const errorParser = useErrorParser();
+
+  const { data: systemToken } = useImportSystemToken();
 
   const { data: CoreProxyContract } = useImportContract('CoreProxy');
   const { data: MulticallContract } = useImportContract('Multicall');
@@ -36,25 +37,26 @@ export function useDelegateCollateral({
 
   return useMutation({
     retry: false,
-    mutationFn: async (delegateAmountDelta: ethers.BigNumber) => {
+    mutationFn: async (burnUsdAmount: ethers.BigNumber) => {
       if (
         !(
           chainId &&
-          CoreProxyContract &&
-          MulticallContract &&
-          PythERC7412WrapperContract &&
-          priceIds &&
           provider &&
           walletAddress &&
           accountId &&
           poolId &&
-          collateralTypeTokenAddress
+          collateralTypeTokenAddress &&
+          systemToken &&
+          CoreProxyContract &&
+          MulticallContract &&
+          PythERC7412WrapperContract &&
+          priceIds
         )
       ) {
         throw 'OMFG';
       }
 
-      if (delegateAmountDelta.eq(0)) {
+      if (burnUsdAmount.eq(0)) {
         throw new Error('Amount required');
       }
 
@@ -64,36 +66,24 @@ export function useDelegateCollateral({
         PythERC7412WrapperContract,
         priceIds,
       });
-      console.log('freshPriceUpdateTxn', freshPriceUpdateTxn);
+      console.log({ freshPriceUpdateTxn });
 
-      const freshAccountAvailableCollateral = await fetchAccountAvailableCollateral({
+      const freshAccountAvailableUsd = await fetchAccountAvailableCollateral({
         provider,
         CoreProxyContract,
         accountId,
-        tokenAddress: collateralTypeTokenAddress,
+        tokenAddress: systemToken.address,
       });
-      console.log('freshAccountAvailableCollateral', freshAccountAvailableCollateral);
+      console.log({ freshAccountAvailableUsd });
 
-      const hasEnoughDeposit = freshAccountAvailableCollateral.gte(delegateAmountDelta);
+      const hasEnoughDeposit = freshAccountAvailableUsd.gte(burnUsdAmount);
       if (!hasEnoughDeposit) {
-        throw new Error('Not enough deposit');
+        throw new Error(`Not enough deposited ${systemToken.symbol}`);
       }
 
-      const freshPositionCollateral = await fetchPositionCollateral({
-        provider,
-        CoreProxyContract,
-        accountId,
-        poolId,
-        tokenAddress: collateralTypeTokenAddress,
-      });
-      console.log('freshPositionCollateral', freshPositionCollateral);
-
-      const delegateAmount = freshPositionCollateral.add(delegateAmountDelta);
-      console.log('delegateAmount', delegateAmount);
-
       if (freshPriceUpdateTxn.value) {
-        console.log('-> delegateCollateralWithPriceUpdate');
-        await delegateCollateralWithPriceUpdate({
+        console.log('-> burnUsdWithPriceUpdate');
+        await fetchBurnUsdWithPriceUpdate({
           provider,
           walletAddress,
           CoreProxyContract,
@@ -101,22 +91,22 @@ export function useDelegateCollateral({
           accountId,
           poolId,
           tokenAddress: collateralTypeTokenAddress,
-          delegateAmount,
+          burnUsdAmount,
           priceUpdateTxn: freshPriceUpdateTxn,
         });
         return { priceUpdated: true };
       }
-      console.log('-> delegateCollateral');
-      await delegateCollateral({
+
+      console.log('-> burnUsd');
+      await fetchBurnUsd({
         provider,
         walletAddress,
         CoreProxyContract,
         accountId,
         poolId,
         tokenAddress: collateralTypeTokenAddress,
-        delegateAmount,
+        burnUsdAmount,
       });
-
       return { priceUpdated: false };
     },
     throwOnError: (error) => {
@@ -137,7 +127,7 @@ export function useDelegateCollateral({
       queryClient.invalidateQueries({
         queryKey: [
           chainId,
-          'AccountCollateral',
+          'PositionDebt',
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
             accountId: accountId?.toHexString(),
@@ -152,32 +142,12 @@ export function useDelegateCollateral({
           { CoreProxy: CoreProxyContract?.address },
           {
             accountId: accountId?.toHexString(),
-            tokenAddress: collateralTypeTokenAddress,
+            tokenAddress: systemToken?.address,
           },
         ],
       });
       queryClient.invalidateQueries({
-        queryKey: [
-          chainId,
-          'PositionCollateral',
-          { CoreProxy: CoreProxyContract?.address },
-          {
-            accountId: accountId?.toHexString(),
-            poolId: poolId?.toHexString(),
-            tokenAddress: collateralTypeTokenAddress,
-          },
-        ],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [
-          chainId,
-          'PositionDebt',
-          { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
-          {
-            accountId: accountId?.toHexString(),
-            tokenAddress: collateralTypeTokenAddress,
-          },
-        ],
+        queryKey: [chainId, 'AccountLastInteraction', { CoreProxy: CoreProxyContract?.address }, { accountId: accountId?.toHexString() }],
       });
 
       onSuccess();
