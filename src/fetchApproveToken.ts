@@ -9,8 +9,8 @@ export async function fetchApproveToken({
 }: {
   provider: ethers.providers.Web3Provider;
   walletAddress: string;
-  tokenAddress: ethers.BigNumberish;
-  spenderAddress: ethers.BigNumberish;
+  tokenAddress: string;
+  spenderAddress: string;
   allowance: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);

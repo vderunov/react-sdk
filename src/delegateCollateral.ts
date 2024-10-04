@@ -14,7 +14,7 @@ export async function delegateCollateral({
   CoreProxyContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
   poolId: ethers.BigNumberish;
-  tokenAddress: ethers.BigNumberish;
+  tokenAddress: string;
   delegateAmount: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);

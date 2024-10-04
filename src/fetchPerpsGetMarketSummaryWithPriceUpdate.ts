@@ -12,7 +12,7 @@ export async function fetchPerpsGetMarketSummaryWithPriceUpdate({
   PerpsMarketProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
   priceUpdateTxn: {
-    target: ethers.BigNumberish;
+    target: string;
     callData: ethers.BigNumberish;
     value: ethers.BigNumberish;
     requireSuccess: boolean;

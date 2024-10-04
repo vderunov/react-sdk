@@ -7,9 +7,9 @@ export async function fetchTokenAllowance({
   spenderAddress,
 }: {
   provider: ethers.providers.BaseProvider;
-  tokenAddress: ethers.BigNumberish;
-  ownerAddress: ethers.BigNumberish;
-  spenderAddress: ethers.BigNumberish;
+  tokenAddress: string;
+  ownerAddress: string;
+  spenderAddress: string;
 }) {
   const Token = new ethers.Contract(
     tokenAddress.toString(),

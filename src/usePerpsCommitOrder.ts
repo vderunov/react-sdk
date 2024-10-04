@@ -23,7 +23,7 @@ export function usePerpsCommitOrder({
   perpsMarketId: ethers.BigNumberish;
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  feedId?: ethers.BigNumberish;
+  feedId?: string;
   settlementStrategyId?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {
@@ -79,7 +79,7 @@ export function usePerpsCommitOrder({
         throw new Error('Total collateral value is less than the size delta');
       }
 
-      const pythPrice = await getPythPrice({ feedId: feedId.toString() });
+      const pythPrice = await getPythPrice({ feedId });
 
       const orderCommitmentArgs = {
         perpsMarketId,

@@ -14,7 +14,7 @@ export async function fetchBurnUsd({
   CoreProxyContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
   poolId: ethers.BigNumberish;
-  tokenAddress: ethers.BigNumberish;
+  tokenAddress: string;
   burnUsdAmount: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);

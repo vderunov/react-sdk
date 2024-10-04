@@ -9,7 +9,7 @@ export async function fetchAccountCollateral({
   provider: ethers.providers.Web3Provider;
   CoreProxyContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
-  tokenAddress: ethers.BigNumberish;
+  tokenAddress: string;
 }) {
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, provider);
   console.time('fetchAccountCollateral');

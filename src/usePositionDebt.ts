@@ -16,7 +16,7 @@ export function usePositionDebt({
   provider?: ethers.providers.Web3Provider;
   accountId?: ethers.BigNumberish;
   poolId?: ethers.BigNumberish;
-  tokenAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

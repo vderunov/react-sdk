@@ -14,7 +14,7 @@ export async function fetchPerpsSettleOrderWithPriceUpdate({
   MulticallContract: { address: string; abi: string[] };
   perpsAccountId: ethers.BigNumberish;
   priceUpdateTxn: {
-    target: ethers.BigNumberish;
+    target: string;
     callData: ethers.BigNumberish;
     value: ethers.BigNumberish;
     requireSuccess: boolean;

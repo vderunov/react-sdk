@@ -19,7 +19,7 @@ export function useWithdraw({
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
   accountId?: ethers.BigNumberish;
-  tokenAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();

@@ -25,7 +25,7 @@ export function useSpotSell({
   walletAddress?: string;
   synthMarketId?: ethers.BigNumberish;
   settlementStrategyId?: ethers.BigNumberish;
-  synthTokenAddress?: ethers.BigNumberish;
+  synthTokenAddress?: string;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();

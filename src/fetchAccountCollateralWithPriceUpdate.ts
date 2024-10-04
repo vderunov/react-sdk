@@ -12,9 +12,9 @@ export async function fetchAccountCollateralWithPriceUpdate({
   CoreProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
-  tokenAddress: ethers.BigNumberish;
+  tokenAddress: string;
   priceUpdateTxn: {
-    target: ethers.BigNumberish;
+    target: string;
     callData: ethers.BigNumberish;
     value: ethers.BigNumberish;
     requireSuccess: boolean;

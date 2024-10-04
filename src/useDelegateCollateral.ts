@@ -20,7 +20,7 @@ export function useDelegateCollateral({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  collateralTypeTokenAddress?: ethers.BigNumberish;
+  collateralTypeTokenAddress?: string;
   poolId?: ethers.BigNumberish;
   accountId?: ethers.BigNumberish;
   onSuccess: () => void;

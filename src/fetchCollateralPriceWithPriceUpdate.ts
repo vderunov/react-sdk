@@ -10,9 +10,9 @@ export async function fetchCollateralPriceWithPriceUpdate({
   provider: ethers.providers.Web3Provider;
   CoreProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
-  tokenAddress: ethers.BigNumberish;
+  tokenAddress: string;
   priceUpdateTxn: {
-    target: ethers.BigNumberish;
+    target: string;
     callData: ethers.BigNumberish;
     value: ethers.BigNumberish;
     requireSuccess: boolean;

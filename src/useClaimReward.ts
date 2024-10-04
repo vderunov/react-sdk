@@ -18,7 +18,7 @@ export function useClaimReward({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  tokenAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
   accountId?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {

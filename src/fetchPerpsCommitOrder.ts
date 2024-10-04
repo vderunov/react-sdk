@@ -15,7 +15,7 @@ export async function fetchPerpsCommitOrder({
     sizeDelta: ethers.BigNumberish;
     settlementStrategyId: ethers.BigNumberish;
     acceptablePrice: ethers.BigNumberish;
-    referrer: ethers.BigNumberish;
+    referrer: string;
     trackingCode: ethers.BigNumberish;
   };
 }) {

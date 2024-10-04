@@ -15,10 +15,10 @@ export async function fetchWithdrawCollateralWithPriceUpdate({
   CoreProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
-  tokenAddress: ethers.BigNumberish;
+  tokenAddress: string;
   withdrawAmount: ethers.BigNumberish;
   priceUpdateTxn: {
-    target: ethers.BigNumberish;
+    target: string;
     callData: ethers.BigNumberish;
     value: ethers.BigNumberish;
     requireSuccess: boolean;

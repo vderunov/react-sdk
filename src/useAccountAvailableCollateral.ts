@@ -12,7 +12,7 @@ export function useAccountAvailableCollateral({
 }: {
   provider?: ethers.providers.BaseProvider;
   accountId?: ethers.BigNumberish;
-  tokenAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

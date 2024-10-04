@@ -23,8 +23,8 @@ export function useSpotWrap({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  tokenAddress?: ethers.BigNumberish;
-  synthTokenAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
+  synthTokenAddress?: string;
   synthMarketId?: ethers.BigNumberish;
   settlementStrategyId?: ethers.BigNumberish;
   onSuccess: () => void;

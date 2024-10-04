@@ -10,8 +10,8 @@ export function useTokenBalance({
   ownerAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
-  tokenAddress?: ethers.BigNumberish;
-  ownerAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
+  ownerAddress?: string;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

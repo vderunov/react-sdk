@@ -6,8 +6,8 @@ export async function fetchTokenBalance({
   ownerAddress,
 }: {
   provider: ethers.providers.BaseProvider;
-  tokenAddress: ethers.BigNumberish;
-  ownerAddress: ethers.BigNumberish;
+  tokenAddress: string;
+  ownerAddress: string;
 }) {
   const Token = new ethers.Contract(tokenAddress.toString(), ['function balanceOf(address account) view returns (uint256)'], provider);
   return Token.balanceOf(ownerAddress);

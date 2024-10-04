@@ -14,7 +14,7 @@ export function useWethDeposit({
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
   perpsAccountId?: ethers.BigNumberish;
-  tokenAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();

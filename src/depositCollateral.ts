@@ -12,7 +12,7 @@ export async function depositCollateral({
   walletAddress: string;
   CoreProxyContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
-  tokenAddress: ethers.BigNumberish;
+  tokenAddress: string;
   depositAmount: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);

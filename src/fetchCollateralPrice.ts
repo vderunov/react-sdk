@@ -7,7 +7,7 @@ export async function fetchCollateralPrice({
 }: {
   provider: ethers.providers.Web3Provider;
   CoreProxyContract: { address: string; abi: string[] };
-  tokenAddress: ethers.BigNumberish;
+  tokenAddress: string;
 }) {
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, provider);
   console.time('fetchCollateralPrice');

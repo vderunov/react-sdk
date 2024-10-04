@@ -13,7 +13,7 @@ export function usePositionCollateral({
 }: {
   accountId?: ethers.BigNumberish;
   poolId?: ethers.BigNumberish;
-  tokenAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
   provider?: ethers.providers.BaseProvider;
 }) {
   const { chainId } = useSynthetix();

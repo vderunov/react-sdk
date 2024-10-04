@@ -16,7 +16,7 @@ export async function fetchSpotWrapWithPriceUpdate({
   synthMarketId: ethers.BigNumberish;
   amount: ethers.BigNumberish;
   priceUpdateTxn: {
-    target: ethers.BigNumberish;
+    target: string;
     callData: ethers.BigNumberish;
     value: ethers.BigNumberish;
     requireSuccess: boolean;

@@ -20,7 +20,7 @@ export function useDeposit({
   walletAddress?: string;
   accountId?: ethers.BigNumberish;
   poolId?: ethers.BigNumberish;
-  collateralTypeTokenAddress?: ethers.BigNumberish;
+  collateralTypeTokenAddress?: string;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();

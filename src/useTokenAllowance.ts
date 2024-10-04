@@ -11,9 +11,9 @@ export function useTokenAllowance({
   spenderAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
-  tokenAddress?: ethers.BigNumberish;
-  ownerAddress?: ethers.BigNumberish;
-  spenderAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
+  ownerAddress?: string;
+  spenderAddress?: string;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

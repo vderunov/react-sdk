@@ -12,7 +12,7 @@ export function useCollateralPrice({
   tokenAddress,
 }: {
   provider?: ethers.providers.Web3Provider;
-  tokenAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

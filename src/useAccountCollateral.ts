@@ -15,7 +15,7 @@ export function useAccountCollateral({
 }: {
   provider: ethers.providers.Web3Provider;
   accountId?: ethers.BigNumberish;
-  tokenAddress?: ethers.BigNumberish;
+  tokenAddress?: string;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

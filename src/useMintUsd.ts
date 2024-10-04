@@ -11,14 +11,14 @@ export function useMintUsd({
   provider,
   walletAddress,
   accountId,
-  collateralTokenAddress,
+  collateralTypeTokenAddress,
   poolId,
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
   accountId?: ethers.BigNumberish;
-  collateralTokenAddress?: ethers.BigNumberish;
+  collateralTypeTokenAddress?: string;
   poolId?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {
@@ -45,7 +45,7 @@ export function useMintUsd({
           priceUpdateTxn &&
           accountId &&
           poolId &&
-          collateralTokenAddress
+          collateralTypeTokenAddress
         )
       ) {
         throw 'OMFG';
@@ -66,7 +66,7 @@ export function useMintUsd({
           MulticallContract,
           accountId,
           poolId,
-          tokenAddress: collateralTokenAddress,
+          tokenAddress: collateralTypeTokenAddress,
           mintUsdAmount,
           priceUpdateTxn,
         });
@@ -79,7 +79,7 @@ export function useMintUsd({
         CoreProxyContract,
         accountId,
         poolId,
-        tokenAddress: collateralTokenAddress,
+        tokenAddress: collateralTypeTokenAddress,
         mintUsdAmount,
       });
       return { priceUpdated: false };
@@ -106,7 +106,7 @@ export function useMintUsd({
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress: collateralTokenAddress,
+            tokenAddress: collateralTypeTokenAddress,
           },
         ],
       });
