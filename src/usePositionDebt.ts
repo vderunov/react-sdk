@@ -41,7 +41,7 @@ export function usePositionDebt({
       chainId,
       'PositionDebt',
       { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
-      { accountId: ethers.BigNumber.from(accountId).toHexString(), tokenAddress },
+      { accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined, tokenAddress },
     ],
     queryFn: async () => {
       if (

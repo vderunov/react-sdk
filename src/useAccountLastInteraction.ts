@@ -22,7 +22,7 @@ export function useAccountLastInteraction({
       chainId,
       'AccountLastInteraction',
       { CoreProxy: CoreProxyContract?.address },
-      { accountId: ethers.BigNumber.from(accountId).toHexString() },
+      { accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined },
     ],
     queryFn: async () => {
       if (!(chainId && provider && CoreProxyContract?.address && accountId)) {

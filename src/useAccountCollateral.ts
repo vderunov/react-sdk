@@ -33,7 +33,7 @@ export function useAccountCollateral({
       chainId,
       'AccountCollateral',
       { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
-      { accountId: ethers.BigNumber.from(accountId).toHexString(), tokenAddress },
+      { accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined, tokenAddress },
     ],
     queryFn: async () => {
       if (

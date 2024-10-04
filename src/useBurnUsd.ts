@@ -131,7 +131,7 @@ export function useBurnUsd({
           'PositionDebt',
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress: collateralTypeTokenAddress,
           },
         ],
@@ -142,7 +142,7 @@ export function useBurnUsd({
           'AccountAvailableCollateral',
           { CoreProxy: CoreProxyContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress: systemToken?.address,
           },
         ],
@@ -152,7 +152,7 @@ export function useBurnUsd({
           chainId,
           'AccountLastInteraction',
           { CoreProxy: CoreProxyContract?.address },
-          { accountId: ethers.BigNumber.from(accountId).toHexString() },
+          { accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined },
         ],
       });
 

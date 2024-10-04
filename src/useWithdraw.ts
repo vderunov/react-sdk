@@ -122,7 +122,7 @@ export function useWithdraw({
           'AccountCollateral',
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress,
           },
         ],
@@ -133,7 +133,7 @@ export function useWithdraw({
           'AccountAvailableCollateral',
           { CoreProxy: CoreProxyContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress,
           },
         ],

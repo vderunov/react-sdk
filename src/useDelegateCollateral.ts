@@ -141,7 +141,7 @@ export function useDelegateCollateral({
           'AccountCollateral',
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress: collateralTypeTokenAddress,
           },
         ],
@@ -152,7 +152,7 @@ export function useDelegateCollateral({
           'AccountAvailableCollateral',
           { CoreProxy: CoreProxyContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress: collateralTypeTokenAddress,
           },
         ],
@@ -163,8 +163,8 @@ export function useDelegateCollateral({
           'PositionCollateral',
           { CoreProxy: CoreProxyContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
-            poolId: ethers.BigNumber.from(poolId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
+            poolId: poolId ? ethers.BigNumber.from(poolId).toHexString() : undefined,
             tokenAddress: collateralTypeTokenAddress,
           },
         ],
@@ -175,7 +175,7 @@ export function useDelegateCollateral({
           'PositionDebt',
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress: collateralTypeTokenAddress,
           },
         ],

@@ -123,7 +123,7 @@ export function useClaimReward({
           'AccountCollateral',
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress,
           },
         ],
@@ -134,7 +134,7 @@ export function useClaimReward({
           'AccountAvailableCollateral',
           { CoreProxy: CoreProxyContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress,
           },
         ],

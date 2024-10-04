@@ -106,7 +106,7 @@ export function useMintUsd({
           'PositionDebt',
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress: collateralTokenAddress,
           },
         ],
@@ -117,7 +117,7 @@ export function useMintUsd({
           'AccountAvailableCollateral',
           { CoreProxy: CoreProxyContract?.address },
           {
-            accountId: ethers.BigNumber.from(accountId).toHexString(),
+            accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             tokenAddress: systemToken?.address,
           },
         ],
@@ -127,7 +127,7 @@ export function useMintUsd({
           chainId,
           'AccountLastInteraction',
           { CoreProxy: CoreProxyContract?.address },
-          { accountId: ethers.BigNumber.from(accountId).toHexString() },
+          { accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined },
         ],
       });
 

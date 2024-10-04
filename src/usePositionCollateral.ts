@@ -28,8 +28,8 @@ export function usePositionCollateral({
       'PositionCollateral',
       { CoreProxy: CoreProxyContract?.address },
       {
-        accountId: ethers.BigNumber.from(accountId).toHexString(),
-        poolId: ethers.BigNumber.from(poolId).toHexString(),
+        accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
+        poolId: poolId ? ethers.BigNumber.from(poolId).toHexString() : undefined,
         tokenAddress,
       },
     ],
