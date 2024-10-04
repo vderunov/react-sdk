@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchPositionDebt } from './fetchPositionDebt';
 import { fetchPositionDebtWithPriceUpdate } from './fetchPositionDebtWithPriceUpdate';
 import { useErrorParser } from './useErrorParser';
@@ -14,9 +14,9 @@ export function usePositionDebt({
   tokenAddress,
 }: {
   provider?: ethers.providers.Web3Provider;
-  accountId?: BigNumberish;
-  poolId?: BigNumberish;
-  tokenAddress?: BigNumberish;
+  accountId?: ethers.BigNumberish;
+  poolId?: ethers.BigNumberish;
+  tokenAddress?: ethers.BigNumberish;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

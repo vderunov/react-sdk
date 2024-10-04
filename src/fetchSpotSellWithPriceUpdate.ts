@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchSpotSellWithPriceUpdate({
   provider,
@@ -13,12 +13,12 @@ export async function fetchSpotSellWithPriceUpdate({
   walletAddress: string;
   SpotMarketProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
-  synthMarketId: BigNumberish;
-  amount: BigNumberish;
+  synthMarketId: ethers.BigNumberish;
+  amount: ethers.BigNumberish;
   priceUpdateTxn: {
-    target: BigNumberish;
-    callData: BigNumberish;
-    value: BigNumberish;
+    target: ethers.BigNumberish;
+    callData: ethers.BigNumberish;
+    value: ethers.BigNumberish;
     requireSuccess: boolean;
   };
 }) {

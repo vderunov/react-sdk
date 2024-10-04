@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchApproveToken } from './fetchApproveToken';
 import { fetchTokenAllowance } from './fetchTokenAllowance';
 import { fetchTokenBalance } from './fetchTokenBalance';
@@ -13,7 +13,7 @@ export function usePerpsModifyCollateral({
   provider,
   walletAddress,
   perpsAccountId,
-}: { provider?: ethers.providers.Web3Provider; walletAddress?: string; perpsAccountId?: BigNumberish }) {
+}: { provider?: ethers.providers.Web3Provider; walletAddress?: string; perpsAccountId?: ethers.BigNumberish }) {
   const { chainId, queryClient } = useSynthetix();
   const errorParser = useErrorParser();
   const { data: systemToken } = useImportSystemToken();
@@ -21,7 +21,7 @@ export function usePerpsModifyCollateral({
   const { data: PerpsMarketProxyContract } = useImportContract('PerpsMarketProxy');
 
   return useMutation({
-    mutationFn: async (depositAmount: BigNumberish) => {
+    mutationFn: async (depositAmount: ethers.BigNumberish) => {
       if (!(chainId && provider && PerpsMarketProxyContract?.address && walletAddress && perpsAccountId && systemToken)) {
         throw 'OMFG';
       }

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchCollateralPrice } from './fetchCollateralPrice';
 import { fetchCollateralPriceWithPriceUpdate } from './fetchCollateralPriceWithPriceUpdate';
 import { useErrorParser } from './useErrorParser';
@@ -12,7 +12,7 @@ export function useCollateralPrice({
   tokenAddress,
 }: {
   provider?: ethers.providers.Web3Provider;
-  tokenAddress?: BigNumberish;
+  tokenAddress?: ethers.BigNumberish;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

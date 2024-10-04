@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchMintUsd({
   provider,
@@ -12,10 +12,10 @@ export async function fetchMintUsd({
   provider: ethers.providers.Web3Provider;
   walletAddress: string;
   CoreProxyContract: { address: string; abi: string[] };
-  accountId: BigNumberish;
-  poolId: BigNumberish;
-  tokenAddress: BigNumberish;
-  mintUsdAmount: BigNumberish;
+  accountId: ethers.BigNumberish;
+  poolId: ethers.BigNumberish;
+  tokenAddress: ethers.BigNumberish;
+  mintUsdAmount: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);
 

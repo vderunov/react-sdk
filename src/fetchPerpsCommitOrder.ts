@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchPerpsCommitOrder({
   provider,
@@ -10,13 +10,13 @@ export async function fetchPerpsCommitOrder({
   walletAddress: string;
   PerpsMarketProxyContract: { address: string; abi: string[] };
   orderCommitmentArgs: {
-    perpsMarketId: BigNumberish;
-    perpsAccountId: BigNumberish;
-    sizeDelta: BigNumberish;
-    settlementStrategyId: BigNumberish;
-    acceptablePrice: BigNumberish;
-    referrer: BigNumberish;
-    trackingCode: BigNumberish;
+    perpsMarketId: ethers.BigNumberish;
+    perpsAccountId: ethers.BigNumberish;
+    sizeDelta: ethers.BigNumberish;
+    settlementStrategyId: ethers.BigNumberish;
+    acceptablePrice: ethers.BigNumberish;
+    referrer: ethers.BigNumberish;
+    trackingCode: ethers.BigNumberish;
   };
 }) {
   const signer = provider.getSigner(walletAddress);

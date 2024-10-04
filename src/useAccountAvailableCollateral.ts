@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchAccountAvailableCollateral } from './fetchAccountAvailableCollateral';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
@@ -11,8 +11,8 @@ export function useAccountAvailableCollateral({
   tokenAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
-  accountId?: BigNumberish;
-  tokenAddress?: BigNumberish;
+  accountId?: ethers.BigNumberish;
+  tokenAddress?: ethers.BigNumberish;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchBurnUsd({
   provider,
@@ -12,10 +12,10 @@ export async function fetchBurnUsd({
   provider: ethers.providers.Web3Provider;
   walletAddress: string;
   CoreProxyContract: { address: string; abi: string[] };
-  accountId: BigNumberish;
-  poolId: BigNumberish;
-  tokenAddress: BigNumberish;
-  burnUsdAmount: BigNumberish;
+  accountId: ethers.BigNumberish;
+  poolId: ethers.BigNumberish;
+  tokenAddress: ethers.BigNumberish;
+  burnUsdAmount: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, signer);

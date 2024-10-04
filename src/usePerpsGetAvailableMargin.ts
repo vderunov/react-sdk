@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { BigNumberish, ethers } from 'ethers';
+import type { ethers } from 'ethers';
 import { fetchPerpsGetAvailableMargin } from './fetchPerpsGetAvailableMargin';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
@@ -8,7 +8,7 @@ import { useSynthetix } from './useSynthetix';
 export function usePerpsGetAvailableMargin({
   provider,
   perpsAccountId,
-}: { provider?: ethers.providers.BaseProvider; perpsAccountId?: BigNumberish }) {
+}: { provider?: ethers.providers.BaseProvider; perpsAccountId?: ethers.BigNumberish }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();
 

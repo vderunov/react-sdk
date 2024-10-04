@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import type { BigNumberish, ethers } from 'ethers';
+import type { ethers } from 'ethers';
 import { fetchPerpsSettleOrder } from './fetchPerpsSettleOrder';
 import { fetchPerpsSettleOrderWithPriceUpdate } from './fetchPerpsSettleOrderWithPriceUpdate';
 import { fetchStrictPriceUpdateTxn } from './fetchStrictPriceUpdateTxn';
@@ -18,9 +18,9 @@ export function usePerpsSettleOrder({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  perpsMarketId?: BigNumberish;
-  perpsAccountId?: BigNumberish;
-  settlementStrategyId?: BigNumberish;
+  perpsMarketId?: ethers.BigNumberish;
+  perpsAccountId?: ethers.BigNumberish;
+  settlementStrategyId?: ethers.BigNumberish;
 }) {
   const { chainId, queryClient } = useSynthetix();
   const errorParser = useErrorParser();

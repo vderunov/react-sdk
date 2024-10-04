@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchPositionCollateral({
   provider,
@@ -9,9 +9,9 @@ export async function fetchPositionCollateral({
 }: {
   provider: ethers.providers.BaseProvider;
   CoreProxyContract: { address: string; abi: string[] };
-  accountId: BigNumberish;
-  poolId: BigNumberish;
-  tokenAddress: BigNumberish;
+  accountId: ethers.BigNumberish;
+  poolId: ethers.BigNumberish;
+  tokenAddress: ethers.BigNumberish;
 }) {
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, provider);
   const positionCollateral = await CoreProxy.getPositionCollateral(accountId, poolId, tokenAddress);

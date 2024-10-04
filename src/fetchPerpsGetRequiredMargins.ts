@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchPerpsGetRequiredMargins({
   provider,
@@ -7,7 +7,7 @@ export async function fetchPerpsGetRequiredMargins({
 }: {
   provider: ethers.providers.BaseProvider;
   PerpsMarketProxyContract: { address: string; abi: string[] };
-  perpsAccountId: BigNumberish;
+  perpsAccountId: ethers.BigNumberish;
 }) {
   const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, provider);
   console.time('fetchPerpsGetRequiredMargins');

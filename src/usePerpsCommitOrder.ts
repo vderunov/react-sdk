@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchPerpsCommitOrder } from './fetchPerpsCommitOrder';
 import { fetchPerpsCommitOrderWithPriceUpdate } from './fetchPerpsCommitOrderWithPriceUpdate';
 import { fetchPerpsGetAvailableMargin } from './fetchPerpsGetAvailableMargin';
@@ -19,12 +19,12 @@ export function usePerpsCommitOrder({
   settlementStrategyId,
   onSuccess,
 }: {
-  perpsAccountId?: BigNumberish;
-  perpsMarketId: BigNumberish;
+  perpsAccountId?: ethers.BigNumberish;
+  perpsMarketId: ethers.BigNumberish;
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  feedId?: BigNumberish;
-  settlementStrategyId?: BigNumberish;
+  feedId?: ethers.BigNumberish;
+  settlementStrategyId?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -38,7 +38,7 @@ export function usePerpsCommitOrder({
 
   return useMutation({
     retry: false,
-    mutationFn: async (sizeDelta: BigNumberish) => {
+    mutationFn: async (sizeDelta: ethers.BigNumberish) => {
       if (
         !(
           chainId &&

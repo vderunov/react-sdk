@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchMintUsdWithPriceUpdate({
   provider,
@@ -15,14 +15,14 @@ export async function fetchMintUsdWithPriceUpdate({
   walletAddress: string;
   CoreProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
-  accountId: BigNumberish;
-  poolId: BigNumberish;
-  tokenAddress: BigNumberish;
-  mintUsdAmount: BigNumberish;
+  accountId: ethers.BigNumberish;
+  poolId: ethers.BigNumberish;
+  tokenAddress: ethers.BigNumberish;
+  mintUsdAmount: ethers.BigNumberish;
   priceUpdateTxn: {
-    target: BigNumberish;
-    callData: BigNumberish;
-    value: BigNumberish;
+    target: ethers.BigNumberish;
+    callData: ethers.BigNumberish;
+    value: ethers.BigNumberish;
     requireSuccess: boolean;
   };
 }) {

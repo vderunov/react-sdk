@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchPositionCollateral } from './fetchPositionCollateral';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
@@ -11,9 +11,9 @@ export function usePositionCollateral({
   poolId,
   tokenAddress,
 }: {
-  accountId?: BigNumberish;
-  poolId?: BigNumberish;
-  tokenAddress?: BigNumberish;
+  accountId?: ethers.BigNumberish;
+  poolId?: ethers.BigNumberish;
+  tokenAddress?: ethers.BigNumberish;
   provider?: ethers.providers.BaseProvider;
 }) {
   const { chainId } = useSynthetix();

@@ -1,12 +1,12 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import React from 'react';
 
 export function usePriceUpdateTimer({
   commitmentTime,
   settlementWindowDuration,
 }: {
-  commitmentTime?: BigNumberish;
-  settlementWindowDuration?: BigNumberish;
+  commitmentTime?: ethers.BigNumberish;
+  settlementWindowDuration?: ethers.BigNumberish;
 }) {
   const localSettlementWindowDuration = settlementWindowDuration ?? ethers.BigNumber.from(0);
   const unlockUnixtime = commitmentTime

@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import type { BigNumberish } from 'ethers';
 import { ethers } from 'ethers';
 import { fetchApproveToken } from './fetchApproveToken';
 import { fetchPriceUpdateTxn } from './fetchPriceUpdateTxn';
@@ -24,9 +23,9 @@ export function useSpotSell({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  synthMarketId?: BigNumberish;
-  settlementStrategyId?: BigNumberish;
-  synthTokenAddress?: BigNumberish;
+  synthMarketId?: ethers.BigNumberish;
+  settlementStrategyId?: ethers.BigNumberish;
+  synthTokenAddress?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -45,7 +44,7 @@ export function useSpotSell({
   const { data: priceData } = useSpotGetPriceData({ provider, synthMarketId });
 
   return useMutation({
-    mutationFn: async (amount: BigNumberish) => {
+    mutationFn: async (amount: ethers.BigNumberish) => {
       if (
         !(
           chainId &&

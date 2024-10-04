@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function depositCollateral({
   provider,
@@ -11,9 +11,9 @@ export async function depositCollateral({
   provider: ethers.providers.Web3Provider;
   walletAddress: string;
   CoreProxyContract: { address: string; abi: string[] };
-  accountId: BigNumberish;
-  tokenAddress: BigNumberish;
-  depositAmount: BigNumberish;
+  accountId: ethers.BigNumberish;
+  tokenAddress: ethers.BigNumberish;
+  depositAmount: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);
 

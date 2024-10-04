@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { BigNumberish, ethers } from 'ethers';
+import type { ethers } from 'ethers';
 import { fetchPerpsGetMarketSummary } from './fetchPerpsGetMarketSummary';
 import { fetchPerpsGetMarketSummaryWithPriceUpdate } from './fetchPerpsGetMarketSummaryWithPriceUpdate';
 import { useErrorParser } from './useErrorParser';
@@ -10,7 +10,7 @@ import { useSynthetix } from './useSynthetix';
 export function usePerpsGetMarketSummary({
   provider,
   perpsMarketId,
-}: { provider?: ethers.providers.BaseProvider; perpsMarketId: BigNumberish }) {
+}: { provider?: ethers.providers.BaseProvider; perpsMarketId: ethers.BigNumberish }) {
   const { chainId } = useSynthetix();
   const { data: priceUpdateTxn } = usePriceUpdateTxn({ provider });
 

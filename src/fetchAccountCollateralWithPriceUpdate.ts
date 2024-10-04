@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchAccountCollateralWithPriceUpdate({
   provider,
@@ -11,12 +11,12 @@ export async function fetchAccountCollateralWithPriceUpdate({
   provider: ethers.providers.Web3Provider;
   CoreProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
-  accountId: BigNumberish;
-  tokenAddress: BigNumberish;
+  accountId: ethers.BigNumberish;
+  tokenAddress: ethers.BigNumberish;
   priceUpdateTxn: {
-    target: BigNumberish;
-    callData: BigNumberish;
-    value: BigNumberish;
+    target: ethers.BigNumberish;
+    callData: ethers.BigNumberish;
+    value: ethers.BigNumberish;
     requireSuccess: boolean;
   };
 }) {

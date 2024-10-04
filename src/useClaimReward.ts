@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import type { BigNumberish } from 'ethers';
 import { ethers } from 'ethers';
 import { fetchAccountAvailableCollateral } from './fetchAccountAvailableCollateral';
 import { fetchPriceUpdateTxn } from './fetchPriceUpdateTxn';
@@ -19,8 +18,8 @@ export function useClaimReward({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  tokenAddress?: BigNumberish;
-  accountId?: BigNumberish;
+  tokenAddress?: ethers.BigNumberish;
+  accountId?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -34,7 +33,7 @@ export function useClaimReward({
 
   return useMutation({
     retry: false,
-    mutationFn: async (withdrawAmount: BigNumberish) => {
+    mutationFn: async (withdrawAmount: ethers.BigNumberish) => {
       if (
         !(
           chainId &&

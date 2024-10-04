@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import type { BigNumberish } from 'ethers';
 import { ethers } from 'ethers';
 import { delegateCollateral } from './delegateCollateral';
 import { delegateCollateralWithPriceUpdate } from './delegateCollateralWithPriceUpdate';
@@ -21,9 +20,9 @@ export function useDelegateCollateral({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  collateralTypeTokenAddress?: BigNumberish;
-  poolId?: BigNumberish;
-  accountId?: BigNumberish;
+  collateralTypeTokenAddress?: ethers.BigNumberish;
+  poolId?: ethers.BigNumberish;
+  accountId?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -37,7 +36,7 @@ export function useDelegateCollateral({
 
   return useMutation({
     retry: false,
-    mutationFn: async (delegateAmountDelta: BigNumberish) => {
+    mutationFn: async (delegateAmountDelta: ethers.BigNumberish) => {
       if (
         !(
           chainId &&

@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { getPythVaa } from './getPythVaa';
 
 export async function fetchStrictPriceUpdateTxn({
@@ -7,10 +7,10 @@ export async function fetchStrictPriceUpdateTxn({
   PythERC7412WrapperContract,
   feedId,
 }: {
-  commitmentTime: BigNumberish;
-  commitmentPriceDelay: BigNumberish;
+  commitmentTime: ethers.BigNumberish;
+  commitmentPriceDelay: ethers.BigNumberish;
   PythERC7412WrapperContract: { address: string; abi: string[] };
-  feedId: BigNumberish;
+  feedId: ethers.BigNumberish;
 }) {
   console.time('fetchStrictPriceUpdateTxn');
   const PythERC7412WrapperInterface = new ethers.utils.Interface(PythERC7412WrapperContract.abi);

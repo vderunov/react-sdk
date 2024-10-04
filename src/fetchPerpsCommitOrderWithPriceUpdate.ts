@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchPerpsCommitOrderWithPriceUpdate({
   provider,
@@ -13,18 +13,18 @@ export async function fetchPerpsCommitOrderWithPriceUpdate({
   PerpsMarketProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
   orderCommitmentArgs: {
-    perpsMarketId: BigNumberish;
-    perpsAccountId: BigNumberish;
-    sizeDelta: BigNumberish;
-    settlementStrategyId: BigNumberish;
-    acceptablePrice: BigNumberish;
-    referrer: BigNumberish;
-    trackingCode: BigNumberish;
+    perpsMarketId: ethers.BigNumberish;
+    perpsAccountId: ethers.BigNumberish;
+    sizeDelta: ethers.BigNumberish;
+    settlementStrategyId: ethers.BigNumberish;
+    acceptablePrice: ethers.BigNumberish;
+    referrer: ethers.BigNumberish;
+    trackingCode: ethers.BigNumberish;
   };
   priceUpdateTxn: {
-    target: BigNumberish;
-    callData: BigNumberish;
-    value: BigNumberish;
+    target: ethers.BigNumberish;
+    callData: ethers.BigNumberish;
+    value: ethers.BigNumberish;
     requireSuccess: boolean;
   };
 }) {

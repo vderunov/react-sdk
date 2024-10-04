@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { useErrorParser } from './useErrorParser';
 import { useImportContract } from './useImports';
 import { useSynthetix } from './useSynthetix';
 
-export function usePerpsMetadata({ provider, perpsMarketId }: { provider?: ethers.providers.BaseProvider; perpsMarketId?: BigNumberish }) {
+export function usePerpsMetadata({
+  provider,
+  perpsMarketId,
+}: { provider?: ethers.providers.BaseProvider; perpsMarketId?: ethers.BigNumberish }) {
   const { chainId } = useSynthetix();
   const { data: PerpsMarketProxyContract } = useImportContract('PerpsMarketProxy');
   const errorParser = useErrorParser();

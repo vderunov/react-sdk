@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchSpotWrap({
   provider,
@@ -10,8 +10,8 @@ export async function fetchSpotWrap({
   provider: ethers.providers.Web3Provider;
   walletAddress: string;
   SpotMarketProxyContract: { address: string; abi: string[] };
-  synthMarketId: BigNumberish;
-  amount: BigNumberish;
+  synthMarketId: ethers.BigNumberish;
+  amount: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);
   const SpotMarketProxy = new ethers.Contract(SpotMarketProxyContract.address, SpotMarketProxyContract.abi, signer);

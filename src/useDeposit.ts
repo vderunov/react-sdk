@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import type { BigNumberish } from 'ethers';
 import { ethers } from 'ethers';
 import { depositCollateral } from './depositCollateral';
 import { fetchApproveToken } from './fetchApproveToken';
@@ -19,9 +18,9 @@ export function useDeposit({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  accountId?: BigNumberish;
-  poolId?: BigNumberish;
-  collateralTypeTokenAddress?: BigNumberish;
+  accountId?: ethers.BigNumberish;
+  poolId?: ethers.BigNumberish;
+  collateralTypeTokenAddress?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -30,7 +29,7 @@ export function useDeposit({
   const { data: CoreProxyContract } = useImportContract('CoreProxy');
 
   return useMutation({
-    mutationFn: async (depositAmount: BigNumberish) => {
+    mutationFn: async (depositAmount: ethers.BigNumberish) => {
       if (!(chainId && provider && CoreProxyContract && walletAddress && accountId && poolId && collateralTypeTokenAddress)) {
         throw 'OMFG';
       }

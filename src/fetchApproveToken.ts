@@ -1,4 +1,4 @@
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchApproveToken({
   provider,
@@ -9,9 +9,9 @@ export async function fetchApproveToken({
 }: {
   provider: ethers.providers.Web3Provider;
   walletAddress: string;
-  tokenAddress: BigNumberish;
-  spenderAddress: BigNumberish;
-  allowance: BigNumberish;
+  tokenAddress: ethers.BigNumberish;
+  spenderAddress: ethers.BigNumberish;
+  allowance: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);
   const Token = new ethers.Contract(tokenAddress.toString(), ['function approve(address spender, uint256 amount) returns (bool)'], signer);

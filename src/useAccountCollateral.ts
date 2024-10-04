@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { fetchAccountCollateral } from './fetchAccountCollateral';
 import { fetchAccountCollateralWithPriceUpdate } from './fetchAccountCollateralWithPriceUpdate';
 import { useErrorParser } from './useErrorParser';
@@ -14,8 +14,8 @@ export function useAccountCollateral({
   tokenAddress,
 }: {
   provider: ethers.providers.Web3Provider;
-  accountId?: BigNumberish;
-  tokenAddress?: BigNumberish;
+  accountId?: ethers.BigNumberish;
+  tokenAddress?: ethers.BigNumberish;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

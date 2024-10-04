@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import type { BigNumberish } from 'ethers';
 import { ethers } from 'ethers';
 import { fetchAccountAvailableCollateral } from './fetchAccountAvailableCollateral';
 import { fetchBurnUsd } from './fetchBurnUsd';
@@ -20,9 +19,9 @@ export function useBurnUsd({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  accountId?: BigNumberish;
-  collateralTypeTokenAddress?: BigNumberish;
-  poolId?: BigNumberish;
+  accountId?: ethers.BigNumberish;
+  collateralTypeTokenAddress?: ethers.BigNumberish;
+  poolId?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -38,7 +37,7 @@ export function useBurnUsd({
 
   return useMutation({
     retry: false,
-    mutationFn: async (burnUsdAmount: BigNumberish) => {
+    mutationFn: async (burnUsdAmount: ethers.BigNumberish) => {
       if (
         !(
           chainId &&

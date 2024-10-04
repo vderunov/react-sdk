@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import type { BigNumberish } from 'ethers';
 import { ethers } from 'ethers';
 import { fetchMintUsd } from './fetchMintUsd';
 import { fetchMintUsdWithPriceUpdate } from './fetchMintUsdWithPriceUpdate';
@@ -18,9 +17,9 @@ export function useMintUsd({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  accountId?: BigNumberish;
-  collateralTokenAddress?: BigNumberish;
-  poolId?: BigNumberish;
+  accountId?: ethers.BigNumberish;
+  collateralTokenAddress?: ethers.BigNumberish;
+  poolId?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -35,7 +34,7 @@ export function useMintUsd({
 
   return useMutation({
     retry: false,
-    mutationFn: async (mintUsdAmount: BigNumberish) => {
+    mutationFn: async (mintUsdAmount: ethers.BigNumberish) => {
       if (
         !(
           chainId &&

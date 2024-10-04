@@ -1,5 +1,5 @@
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
-import { type BigNumberish, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 export async function fetchPriceUpdateTxn({
   provider,
@@ -11,8 +11,8 @@ export async function fetchPriceUpdateTxn({
   provider: ethers.providers.BaseProvider;
   MulticallContract: { address: string; abi: string[] };
   PythERC7412WrapperContract: { address: string; abi: string[] };
-  priceIds: BigNumberish[];
-  stalenessTolerance?: BigNumberish;
+  priceIds: ethers.BigNumberish[];
+  stalenessTolerance?: ethers.BigNumberish;
 }) {
   console.time('fetchPriceUpdateTxn');
   const defaultStalenessTolerance = 1800; // half of 3600 required tolerance
