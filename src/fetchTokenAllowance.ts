@@ -11,10 +11,6 @@ export async function fetchTokenAllowance({
   ownerAddress: string;
   spenderAddress: string;
 }) {
-  const Token = new ethers.Contract(
-    tokenAddress.toString(),
-    ['function allowance(address owner, address spender) view returns (uint256)'],
-    provider
-  );
+  const Token = new ethers.Contract(tokenAddress, ['function allowance(address owner, address spender) view returns (uint256)'], provider);
   return Token.allowance(ownerAddress, spenderAddress);
 }
