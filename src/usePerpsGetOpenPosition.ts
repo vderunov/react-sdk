@@ -11,7 +11,7 @@ export function usePerpsGetOpenPosition({
   perpsMarketId,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: BigNumberish;
+  walletAddress?: string;
   perpsAccountId?: BigNumberish;
   perpsMarketId?: BigNumberish;
 }) {
@@ -38,7 +38,7 @@ export function usePerpsGetOpenPosition({
         throw 'OMFG';
       }
 
-      const signer = provider.getSigner(walletAddress.toString());
+      const signer = provider.getSigner(walletAddress);
       const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, signer);
       const openPosition = await PerpsMarketProxy.getOpenPosition(perpsAccountId, perpsMarketId);
       console.log({ openPosition });

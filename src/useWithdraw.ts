@@ -18,7 +18,7 @@ export function useWithdraw({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: BigNumberish;
+  walletAddress?: string;
   accountId?: BigNumberish;
   tokenAddress?: BigNumberish;
   onSuccess: () => void;

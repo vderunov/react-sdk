@@ -18,7 +18,7 @@ export function useDeposit({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: BigNumberish;
+  walletAddress?: string;
   accountId?: BigNumberish;
   poolId?: BigNumberish;
   collateralTypeTokenAddress?: BigNumberish;

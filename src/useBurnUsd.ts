@@ -19,7 +19,7 @@ export function useBurnUsd({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: BigNumberish;
+  walletAddress?: string;
   accountId?: BigNumberish;
   collateralTypeTokenAddress?: BigNumberish;
   poolId?: BigNumberish;

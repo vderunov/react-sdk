@@ -13,7 +13,7 @@ export function usePerpsModifyCollateral({
   provider,
   walletAddress,
   perpsAccountId,
-}: { provider?: ethers.providers.Web3Provider; walletAddress?: BigNumberish; perpsAccountId?: BigNumberish }) {
+}: { provider?: ethers.providers.Web3Provider; walletAddress?: string; perpsAccountId?: BigNumberish }) {
   const { chainId, queryClient } = useSynthetix();
   const errorParser = useErrorParser();
   const { data: systemToken } = useImportSystemToken();
@@ -58,7 +58,7 @@ export function usePerpsModifyCollateral({
         });
       }
 
-      const signer = provider.getSigner(walletAddress.toString());
+      const signer = provider.getSigner(walletAddress);
       const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, signer);
 
       const modifyCollateralTxnArgs = [perpsAccountId, USDx_MARKET_ID, depositAmount];

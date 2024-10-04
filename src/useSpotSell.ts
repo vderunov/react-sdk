@@ -23,7 +23,7 @@ export function useSpotSell({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: BigNumberish;
+  walletAddress?: string;
   synthMarketId?: BigNumberish;
   settlementStrategyId?: BigNumberish;
   synthTokenAddress?: BigNumberish;

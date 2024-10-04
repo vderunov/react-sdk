@@ -22,7 +22,7 @@ export function usePerpsCommitOrder({
   perpsAccountId?: BigNumberish;
   perpsMarketId: BigNumberish;
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: BigNumberish;
+  walletAddress?: string;
   feedId?: BigNumberish;
   settlementStrategyId?: BigNumberish;
   onSuccess: () => void;

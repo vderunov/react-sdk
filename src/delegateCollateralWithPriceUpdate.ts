@@ -12,7 +12,7 @@ export async function delegateCollateralWithPriceUpdate({
   priceUpdateTxn,
 }: {
   provider: ethers.providers.Web3Provider;
-  walletAddress: BigNumberish;
+  walletAddress: string;
   CoreProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
   accountId: BigNumberish;
@@ -50,10 +50,10 @@ export async function delegateCollateralWithPriceUpdate({
   };
   console.log({ delegateCollateralTxn });
 
-  const signer = provider.getSigner(walletAddress.toString());
+  const signer = provider.getSigner(walletAddress);
 
   const multicallTxn = {
-    from: walletAddress.toString(),
+    from: walletAddress,
     to: MulticallContract.address,
     data: MulticallInterface.encodeFunctionData('aggregate3Value', [[priceUpdateTxn, delegateCollateralTxn]]),
     value: priceUpdateTxn.value,

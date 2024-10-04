@@ -9,13 +9,13 @@ export async function depositCollateral({
   depositAmount,
 }: {
   provider: ethers.providers.Web3Provider;
-  walletAddress: BigNumberish;
+  walletAddress: string;
   CoreProxyContract: { address: string; abi: string[] };
   accountId: BigNumberish;
   tokenAddress: BigNumberish;
   depositAmount: BigNumberish;
 }) {
-  const signer = provider.getSigner(walletAddress.toString());
+  const signer = provider.getSigner(walletAddress);
 
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, signer);
   const tx: ethers.ContractTransaction = await CoreProxy.deposit(

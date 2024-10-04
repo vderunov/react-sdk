@@ -7,11 +7,11 @@ export async function fetchPerpsSettleOrder({
   perpsAccountId,
 }: {
   provider: ethers.providers.Web3Provider;
-  walletAddress: BigNumberish;
+  walletAddress: string;
   PerpsMarketProxyContract: { address: string; abi: string[] };
   perpsAccountId: BigNumberish;
 }) {
-  const signer = provider.getSigner(walletAddress.toString());
+  const signer = provider.getSigner(walletAddress);
   const PerpsMarketProxy = new ethers.Contract(PerpsMarketProxyContract.address, PerpsMarketProxyContract.abi, signer);
 
   console.time('fetchPerpsSettleOrder');

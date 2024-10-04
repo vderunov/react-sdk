@@ -17,7 +17,7 @@ export function useMintUsd({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: BigNumberish;
+  walletAddress?: string;
   accountId?: BigNumberish;
   collateralTokenAddress?: BigNumberish;
   poolId?: BigNumberish;

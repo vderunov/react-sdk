@@ -8,12 +8,12 @@ export async function fetchApproveToken({
   allowance,
 }: {
   provider: ethers.providers.Web3Provider;
-  walletAddress: BigNumberish;
+  walletAddress: string;
   tokenAddress: BigNumberish;
   spenderAddress: BigNumberish;
   allowance: BigNumberish;
 }) {
-  const signer = provider.getSigner(walletAddress.toString());
+  const signer = provider.getSigner(walletAddress);
   const Token = new ethers.Contract(tokenAddress.toString(), ['function approve(address spender, uint256 amount) returns (bool)'], signer);
   const tx: ethers.ContractTransaction = await Token.approve(spenderAddress, allowance);
   console.log({ tx });

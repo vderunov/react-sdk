@@ -17,7 +17,7 @@ export function usePerpsSettleOrder({
   settlementStrategyId,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: BigNumberish;
+  walletAddress?: string;
   perpsMarketId?: BigNumberish;
   perpsAccountId?: BigNumberish;
   settlementStrategyId?: BigNumberish;

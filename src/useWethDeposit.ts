@@ -12,7 +12,7 @@ export function useWethDeposit({
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
-  walletAddress?: BigNumberish;
+  walletAddress?: string;
   perpsAccountId?: BigNumberish;
   tokenAddress?: BigNumberish;
   onSuccess: () => void;
@@ -29,7 +29,7 @@ export function useWethDeposit({
         throw 'OMFG';
       }
 
-      const signer = provider.getSigner(walletAddress.toString());
+      const signer = provider.getSigner(walletAddress);
       const Weth = new ethers.Contract(WethContract.address, WethContract.abi, signer);
       const tx = await Weth.deposit({
         value: amount,
