@@ -106,7 +106,7 @@ export function useMintUsd({
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress: collateralTypeTokenAddress,
+            collateralTypeTokenAddress,
           },
         ],
       });

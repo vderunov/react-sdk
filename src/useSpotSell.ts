@@ -142,10 +142,10 @@ export function useSpotSell({
         });
       }
       queryClient.invalidateQueries({
-        queryKey: [chainId, 'Balance', { tokenAddress: systemToken?.address, ownerAddress: walletAddress }],
+        queryKey: [chainId, 'Balance', { collateralTypeTokenAddress: systemToken?.address, ownerAddress: walletAddress }],
       });
       queryClient.invalidateQueries({
-        queryKey: [chainId, 'Balance', { tokenAddress: synthTokenAddress, ownerAddress: walletAddress }],
+        queryKey: [chainId, 'Balance', { collateralTypeTokenAddress: synthTokenAddress, ownerAddress: walletAddress }],
       });
       onSuccess();
     },

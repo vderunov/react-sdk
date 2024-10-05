@@ -110,7 +110,7 @@ export function useDeposit({
         ],
       });
       queryClient.invalidateQueries({
-        queryKey: [chainId, 'Balance', { tokenAddress: collateralTypeTokenAddress, ownerAddress: walletAddress }],
+        queryKey: [chainId, 'Balance', { collateralTypeTokenAddress, ownerAddress: walletAddress }],
       });
 
       onSuccess();

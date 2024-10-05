@@ -9,11 +9,11 @@ export function usePositionCollateral({
   provider,
   accountId,
   poolId,
-  tokenAddress: collateralTypeTokenAddress,
+  collateralTypeTokenAddress,
 }: {
   accountId?: ethers.BigNumberish;
   poolId?: ethers.BigNumberish;
-  tokenAddress?: string;
+  collateralTypeTokenAddress?: string;
   provider?: ethers.providers.BaseProvider;
 }) {
   const { chainId } = useSynthetix();

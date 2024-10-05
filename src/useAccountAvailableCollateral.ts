@@ -8,11 +8,11 @@ import { useSynthetix } from './useSynthetix';
 export function useAccountAvailableCollateral({
   provider,
   accountId,
-  tokenAddress: collateralTypeTokenAddress,
+  collateralTypeTokenAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
   accountId?: ethers.BigNumberish;
-  tokenAddress?: string;
+  collateralTypeTokenAddress?: string;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();

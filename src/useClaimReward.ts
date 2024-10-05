@@ -12,13 +12,13 @@ import { useSynthetix } from './useSynthetix';
 export function useClaimReward({
   provider,
   walletAddress,
-  tokenAddress: collateralTypeTokenAddress,
+  collateralTypeTokenAddress,
   accountId,
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  tokenAddress?: string;
+  collateralTypeTokenAddress?: string;
   accountId?: ethers.BigNumberish;
   onSuccess: () => void;
 }) {
@@ -123,7 +123,7 @@ export function useClaimReward({
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress: collateralTypeTokenAddress,
+            collateralTypeTokenAddress,
           },
         ],
       });
@@ -143,7 +143,7 @@ export function useClaimReward({
           chainId,
           'Balance',
           {
-            tokenAddress: collateralTypeTokenAddress,
+            collateralTypeTokenAddress,
             ownerAddress: walletAddress,
           },
         ],

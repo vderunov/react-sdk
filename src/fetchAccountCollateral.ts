@@ -4,16 +4,16 @@ export async function fetchAccountCollateral({
   provider,
   CoreProxyContract,
   accountId,
-  tokenAddress,
+  collateralTypeTokenAddress,
 }: {
   provider: ethers.providers.BaseProvider;
   CoreProxyContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
-  tokenAddress: string;
+  collateralTypeTokenAddress: string;
 }) {
   const CoreProxy = new ethers.Contract(CoreProxyContract.address, CoreProxyContract.abi, provider);
   console.time('fetchAccountCollateral');
-  const accountCollateral = await CoreProxy.getAccountCollateral(accountId, tokenAddress);
+  const accountCollateral = await CoreProxy.getAccountCollateral(accountId, collateralTypeTokenAddress);
   console.timeEnd('fetchAccountCollateral');
   return {
     totalAssigned: accountCollateral.totalAssigned,

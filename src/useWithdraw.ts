@@ -13,13 +13,13 @@ export function useWithdraw({
   provider,
   walletAddress,
   accountId,
-  tokenAddress: collateralTypeTokenAddress,
+  collateralTypeTokenAddress,
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
   accountId?: ethers.BigNumberish;
-  tokenAddress?: string;
+  collateralTypeTokenAddress?: string;
   onSuccess: () => void;
 }) {
   const { chainId, queryClient } = useSynthetix();
@@ -122,7 +122,7 @@ export function useWithdraw({
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress: collateralTypeTokenAddress,
+            collateralTypeTokenAddress,
           },
         ],
       });
@@ -142,7 +142,7 @@ export function useWithdraw({
           chainId,
           'Balance',
           {
-            tokenAddress: collateralTypeTokenAddress,
+            collateralTypeTokenAddress,
             ownerAddress: walletAddress,
           },
         ],

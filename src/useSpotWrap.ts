@@ -15,7 +15,7 @@ import { useSynthetix } from './useSynthetix';
 export function useSpotWrap({
   provider,
   walletAddress,
-  tokenAddress: collateralTypeTokenAddress,
+  collateralTypeTokenAddress,
   synthTokenAddress,
   synthMarketId,
   settlementStrategyId,
@@ -23,7 +23,7 @@ export function useSpotWrap({
 }: {
   provider?: ethers.providers.Web3Provider;
   walletAddress?: string;
-  tokenAddress?: string;
+  collateralTypeTokenAddress?: string;
   synthTokenAddress?: string;
   synthMarketId?: ethers.BigNumberish;
   settlementStrategyId?: ethers.BigNumberish;
@@ -147,10 +147,10 @@ export function useSpotWrap({
         ],
       });
       queryClient.invalidateQueries({
-        queryKey: [chainId, 'Balance', { tokenAddress: synthTokenAddress, ownerAddress: walletAddress }],
+        queryKey: [chainId, 'Balance', { collateralTypeTokenAddress: synthTokenAddress, ownerAddress: walletAddress }],
       });
       queryClient.invalidateQueries({
-        queryKey: [chainId, 'Balance', { tokenAddress: collateralTypeTokenAddress, ownerAddress: walletAddress }],
+        queryKey: [chainId, 'Balance', { collateralTypeTokenAddress: collateralTypeTokenAddress, ownerAddress: walletAddress }],
       });
 
       onSuccess();

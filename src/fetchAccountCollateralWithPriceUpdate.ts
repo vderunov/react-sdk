@@ -5,14 +5,14 @@ export async function fetchAccountCollateralWithPriceUpdate({
   CoreProxyContract,
   MulticallContract,
   accountId,
-  tokenAddress,
+  collateralTypeTokenAddress,
   priceUpdateTxn,
 }: {
   provider: ethers.providers.BaseProvider;
   CoreProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
-  tokenAddress: string;
+  collateralTypeTokenAddress: string;
   priceUpdateTxn: {
     target: string;
     callData: string;
@@ -27,7 +27,7 @@ export async function fetchAccountCollateralWithPriceUpdate({
 
   const getAccountCollateralTxn = {
     target: CoreProxyContract.address,
-    callData: CoreProxyInterface.encodeFunctionData('getAccountCollateral', [accountId, tokenAddress]),
+    callData: CoreProxyInterface.encodeFunctionData('getAccountCollateral', [accountId, collateralTypeTokenAddress]),
     value: 0,
     requireSuccess: true,
   };

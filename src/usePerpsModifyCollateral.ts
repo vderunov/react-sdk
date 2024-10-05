@@ -86,7 +86,7 @@ export function usePerpsModifyCollateral({
       });
 
       queryClient.invalidateQueries({
-        queryKey: [chainId, 'Balance', { tokenAddress: systemToken?.address, ownerAddress: walletAddress }],
+        queryKey: [chainId, 'Balance', { collateralTypeTokenAddress: systemToken?.address, ownerAddress: walletAddress }],
       });
       queryClient.invalidateQueries({
         queryKey: [chainId, 'Perps GetAvailableMargin', { PerpsMarketProxy: PerpsMarketProxyContract?.address }, perpsAccountId],

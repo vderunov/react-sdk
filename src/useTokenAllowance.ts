@@ -6,12 +6,12 @@ import { useSynthetix } from './useSynthetix';
 
 export function useTokenAllowance({
   provider,
-  tokenAddress: collateralTypeTokenAddress,
+  collateralTypeTokenAddress,
   ownerAddress,
   spenderAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
-  tokenAddress?: string;
+  collateralTypeTokenAddress?: string;
   ownerAddress?: string;
   spenderAddress?: string;
 }) {

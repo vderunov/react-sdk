@@ -9,10 +9,10 @@ import { useSynthetix } from './useSynthetix';
 
 export function useCollateralPrice({
   provider,
-  tokenAddress,
+  collateralTypeTokenAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
-  tokenAddress?: string;
+  collateralTypeTokenAddress?: string;
 }) {
   const { chainId } = useSynthetix();
   const errorParser = useErrorParser();
@@ -23,22 +23,26 @@ export function useCollateralPrice({
   const { data: MulticallContract } = useImportContract('Multicall');
 
   return useQuery<ethers.BigNumber>({
-    enabled: Boolean(chainId && provider && CoreProxyContract?.address && MulticallContract?.address && tokenAddress && priceUpdateTxn),
+    enabled: Boolean(
+      chainId && provider && CoreProxyContract?.address && MulticallContract?.address && collateralTypeTokenAddress && priceUpdateTxn
+    ),
     queryKey: [
       chainId,
       'CollateralPrice',
       { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
-      { tokenAddress },
+      { collateralTypeTokenAddress },
     ],
     queryFn: async () => {
-      if (!(chainId && provider && CoreProxyContract?.address && MulticallContract?.address && tokenAddress && priceUpdateTxn)) {
+      if (
+        !(chainId && provider && CoreProxyContract?.address && MulticallContract?.address && collateralTypeTokenAddress && priceUpdateTxn)
+      ) {
         throw 'OMFG';
       }
       console.log({
         provider,
         CoreProxyContract,
         MulticallContract,
-        tokenAddress,
+        collateralTypeTokenAddress,
         priceUpdateTxn,
       });
 
@@ -48,7 +52,7 @@ export function useCollateralPrice({
           provider,
           CoreProxyContract,
           MulticallContract,
-          tokenAddress,
+          collateralTypeTokenAddress,
           priceUpdateTxn,
         });
       }
@@ -56,7 +60,7 @@ export function useCollateralPrice({
       return fetchCollateralPrice({
         provider,
         CoreProxyContract,
-        tokenAddress,
+        collateralTypeTokenAddress,
       });
     },
     throwOnError: (error) => {
