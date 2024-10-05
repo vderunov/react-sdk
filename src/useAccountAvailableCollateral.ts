@@ -8,7 +8,7 @@ import { useSynthetix } from './useSynthetix';
 export function useAccountAvailableCollateral({
   provider,
   accountId,
-  tokenAddress,
+  tokenAddress: collateralTypeTokenAddress,
 }: {
   provider?: ethers.providers.BaseProvider;
   accountId?: ethers.BigNumberish;
@@ -20,15 +20,15 @@ export function useAccountAvailableCollateral({
   const { data: CoreProxyContract } = useImportContract('CoreProxy');
 
   return useQuery<ethers.BigNumber>({
-    enabled: Boolean(chainId && provider && CoreProxyContract?.address && accountId && tokenAddress),
+    enabled: Boolean(chainId && provider && CoreProxyContract?.address && accountId && collateralTypeTokenAddress),
     queryKey: [
       chainId,
       'AccountAvailableCollateral',
       { CoreProxy: CoreProxyContract?.address },
-      { accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined, tokenAddress },
+      { accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined, collateralTypeTokenAddress },
     ],
     queryFn: async () => {
-      if (!(chainId && provider && CoreProxyContract?.address && accountId && tokenAddress)) {
+      if (!(chainId && provider && CoreProxyContract?.address && accountId && collateralTypeTokenAddress)) {
         throw 'OMFG';
       }
 
@@ -36,7 +36,7 @@ export function useAccountAvailableCollateral({
         provider,
         CoreProxyContract,
         accountId,
-        tokenAddress,
+        collateralTypeTokenAddress,
       });
     },
     throwOnError: (error) => {

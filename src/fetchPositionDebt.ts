@@ -7,7 +7,7 @@ export async function fetchPositionDebt({
   poolId,
   tokenAddress,
 }: {
-  provider: ethers.providers.Web3Provider;
+  provider: ethers.providers.BaseProvider;
   CoreProxyContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
   poolId: ethers.BigNumberish;

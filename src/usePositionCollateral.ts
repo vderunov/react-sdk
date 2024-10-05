@@ -9,7 +9,7 @@ export function usePositionCollateral({
   provider,
   accountId,
   poolId,
-  tokenAddress,
+  tokenAddress: collateralTypeTokenAddress,
 }: {
   accountId?: ethers.BigNumberish;
   poolId?: ethers.BigNumberish;
@@ -22,7 +22,7 @@ export function usePositionCollateral({
   const { data: CoreProxyContract } = useImportContract('CoreProxy');
 
   return useQuery<ethers.BigNumber>({
-    enabled: Boolean(chainId && CoreProxyContract?.address && provider && accountId && poolId && tokenAddress),
+    enabled: Boolean(chainId && CoreProxyContract?.address && provider && accountId && poolId && collateralTypeTokenAddress),
     queryKey: [
       chainId,
       'PositionCollateral',
@@ -30,11 +30,11 @@ export function usePositionCollateral({
       {
         accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
         poolId: poolId ? ethers.BigNumber.from(poolId).toHexString() : undefined,
-        tokenAddress,
+        collateralTypeTokenAddress,
       },
     ],
     queryFn: async () => {
-      if (!(chainId && CoreProxyContract?.address && provider && accountId && poolId && tokenAddress)) {
+      if (!(chainId && CoreProxyContract?.address && provider && accountId && poolId && collateralTypeTokenAddress)) {
         throw 'OMFG';
       }
       return fetchPositionCollateral({
@@ -42,7 +42,7 @@ export function usePositionCollateral({
         CoreProxyContract,
         accountId,
         poolId,
-        tokenAddress,
+        collateralTypeTokenAddress,
       });
     },
     throwOnError: (error) => {

@@ -5,7 +5,7 @@ export async function fetchCollateralPrice({
   CoreProxyContract,
   tokenAddress,
 }: {
-  provider: ethers.providers.Web3Provider;
+  provider: ethers.providers.BaseProvider;
   CoreProxyContract: { address: string; abi: string[] };
   tokenAddress: string;
 }) {

@@ -8,14 +8,14 @@ export async function fetchAccountCollateralWithPriceUpdate({
   tokenAddress,
   priceUpdateTxn,
 }: {
-  provider: ethers.providers.Web3Provider;
+  provider: ethers.providers.BaseProvider;
   CoreProxyContract: { address: string; abi: string[] };
   MulticallContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
   tokenAddress: string;
   priceUpdateTxn: {
     target: string;
-    callData: ethers.BigNumberish;
+    callData: string;
     value: ethers.BigNumberish;
     requireSuccess: boolean;
   };

@@ -13,7 +13,7 @@ export function useAccountCollateral({
   accountId,
   tokenAddress,
 }: {
-  provider: ethers.providers.Web3Provider;
+  provider: ethers.providers.BaseProvider;
   accountId?: ethers.BigNumberish;
   tokenAddress?: string;
 }) {

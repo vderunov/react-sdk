@@ -72,7 +72,7 @@ export function useBurnUsd({
         provider,
         CoreProxyContract,
         accountId,
-        tokenAddress: systemToken.address,
+        collateralTypeTokenAddress: systemToken.address,
       });
       console.log({ freshAccountAvailableUsd });
 
@@ -90,7 +90,7 @@ export function useBurnUsd({
           MulticallContract,
           accountId,
           poolId,
-          tokenAddress: collateralTypeTokenAddress,
+          collateralTypeTokenAddress,
           burnUsdAmount,
           priceUpdateTxn: freshPriceUpdateTxn,
         });
@@ -104,7 +104,7 @@ export function useBurnUsd({
         CoreProxyContract,
         accountId,
         poolId,
-        tokenAddress: collateralTypeTokenAddress,
+        collateralTypeTokenAddress,
         burnUsdAmount,
       });
       return { priceUpdated: false };
@@ -142,7 +142,7 @@ export function useBurnUsd({
           { CoreProxy: CoreProxyContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress: systemToken?.address,
+            collateralTypeTokenAddress: systemToken?.address,
           },
         ],
       });

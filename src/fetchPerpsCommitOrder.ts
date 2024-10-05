@@ -16,7 +16,7 @@ export async function fetchPerpsCommitOrder({
     settlementStrategyId: ethers.BigNumberish;
     acceptablePrice: ethers.BigNumberish;
     referrer: string;
-    trackingCode: ethers.BigNumberish;
+    trackingCode: string;
   };
 }) {
   const signer = provider.getSigner(walletAddress);

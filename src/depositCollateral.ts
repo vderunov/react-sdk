@@ -5,14 +5,14 @@ export async function depositCollateral({
   walletAddress,
   CoreProxyContract,
   accountId,
-  tokenAddress,
+  collateralTypeTokenAddress,
   depositAmount,
 }: {
   provider: ethers.providers.Web3Provider;
   walletAddress: string;
   CoreProxyContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
-  tokenAddress: string;
+  collateralTypeTokenAddress: string;
   depositAmount: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);
@@ -21,7 +21,7 @@ export async function depositCollateral({
   const tx: ethers.ContractTransaction = await CoreProxy.deposit(
     //
     accountId,
-    tokenAddress,
+    collateralTypeTokenAddress,
     depositAmount
   );
   console.log({ tx });

@@ -19,11 +19,11 @@ export async function fetchPerpsCommitOrderWithPriceUpdate({
     settlementStrategyId: ethers.BigNumberish;
     acceptablePrice: ethers.BigNumberish;
     referrer: string;
-    trackingCode: ethers.BigNumberish;
+    trackingCode: string;
   };
   priceUpdateTxn: {
     target: string;
-    callData: ethers.BigNumberish;
+    callData: string;
     value: ethers.BigNumberish;
     requireSuccess: boolean;
   };

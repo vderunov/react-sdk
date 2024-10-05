@@ -13,7 +13,7 @@ export function usePositionDebt({
   poolId,
   tokenAddress,
 }: {
-  provider?: ethers.providers.Web3Provider;
+  provider?: ethers.providers.BaseProvider;
   accountId?: ethers.BigNumberish;
   poolId?: ethers.BigNumberish;
   tokenAddress?: string;

@@ -23,7 +23,7 @@ export function useTokenBalance({
       if (!(chainId && provider && tokenAddress && ownerAddress)) {
         throw 'OMFG';
       }
-      return fetchTokenBalance({ provider, tokenAddress, ownerAddress });
+      return fetchTokenBalance({ provider, collateralTypeTokenAddress: tokenAddress, ownerAddress });
     },
     throwOnError: (error) => {
       // TODO: show toast

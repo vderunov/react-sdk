@@ -13,7 +13,7 @@ export function useWithdraw({
   provider,
   walletAddress,
   accountId,
-  tokenAddress,
+  tokenAddress: collateralTypeTokenAddress,
   onSuccess,
 }: {
   provider?: ethers.providers.Web3Provider;
@@ -40,7 +40,7 @@ export function useWithdraw({
           provider &&
           walletAddress &&
           accountId &&
-          tokenAddress &&
+          collateralTypeTokenAddress &&
           CoreProxyContract &&
           MulticallContract &&
           PythERC7412WrapperContract &&
@@ -66,7 +66,7 @@ export function useWithdraw({
         provider,
         CoreProxyContract,
         accountId,
-        tokenAddress,
+        collateralTypeTokenAddress,
       });
       console.log('freshAccountAvailableCollateral', freshAccountAvailableCollateral);
 
@@ -83,7 +83,7 @@ export function useWithdraw({
           CoreProxyContract,
           MulticallContract,
           accountId,
-          tokenAddress,
+          collateralTypeTokenAddress,
           withdrawAmount,
           priceUpdateTxn: freshPriceUpdateTxn,
         });
@@ -94,7 +94,7 @@ export function useWithdraw({
           walletAddress,
           CoreProxyContract,
           accountId,
-          tokenAddress,
+          collateralTypeTokenAddress,
           withdrawAmount,
         });
       }
@@ -122,7 +122,7 @@ export function useWithdraw({
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress,
+            tokenAddress: collateralTypeTokenAddress,
           },
         ],
       });
@@ -133,7 +133,7 @@ export function useWithdraw({
           { CoreProxy: CoreProxyContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress,
+            collateralTypeTokenAddress,
           },
         ],
       });
@@ -142,7 +142,7 @@ export function useWithdraw({
           chainId,
           'Balance',
           {
-            tokenAddress,
+            tokenAddress: collateralTypeTokenAddress,
             ownerAddress: walletAddress,
           },
         ],

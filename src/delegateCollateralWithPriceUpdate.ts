@@ -7,7 +7,7 @@ export async function delegateCollateralWithPriceUpdate({
   MulticallContract,
   accountId,
   poolId,
-  tokenAddress,
+  collateralTypeTokenAddress,
   delegateAmount,
   priceUpdateTxn,
 }: {
@@ -17,11 +17,11 @@ export async function delegateCollateralWithPriceUpdate({
   MulticallContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
   poolId: ethers.BigNumberish;
-  tokenAddress: string;
+  collateralTypeTokenAddress: string;
   delegateAmount: ethers.BigNumberish;
   priceUpdateTxn: {
     target: string;
-    callData: ethers.BigNumberish;
+    callData: string;
     value: ethers.BigNumberish;
     requireSuccess: boolean;
   };
@@ -33,7 +33,7 @@ export async function delegateCollateralWithPriceUpdate({
     //
     accountId,
     poolId,
-    tokenAddress,
+    collateralTypeTokenAddress,
     delegateAmount,
     ethers.utils.parseEther('1'), // Leverage
   ];

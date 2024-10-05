@@ -41,7 +41,7 @@ export function useDeposit({
       const freshBalance = await fetchTokenBalance({
         provider,
         ownerAddress: walletAddress,
-        tokenAddress: collateralTypeTokenAddress,
+        collateralTypeTokenAddress,
       });
       console.log('freshBalance', freshBalance);
 
@@ -52,7 +52,7 @@ export function useDeposit({
       const freshAllowance = await fetchTokenAllowance({
         provider,
         ownerAddress: walletAddress,
-        tokenAddress: collateralTypeTokenAddress,
+        collateralTypeTokenAddress,
         spenderAddress: CoreProxyContract?.address,
       });
       console.log('freshAllowance', freshAllowance);
@@ -61,7 +61,7 @@ export function useDeposit({
         await fetchApproveToken({
           provider,
           walletAddress,
-          tokenAddress: collateralTypeTokenAddress,
+          collateralTypeTokenAddress,
           spenderAddress: CoreProxyContract.address,
           allowance: ethers.BigNumber.from(depositAmount).sub(freshAllowance),
         });
@@ -73,7 +73,7 @@ export function useDeposit({
         walletAddress,
         CoreProxyContract,
         accountId,
-        tokenAddress: collateralTypeTokenAddress,
+        collateralTypeTokenAddress,
         depositAmount,
       });
     },
@@ -93,7 +93,7 @@ export function useDeposit({
           { CoreProxy: CoreProxyContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress: collateralTypeTokenAddress,
+            collateralTypeTokenAddress,
           },
         ],
       });
@@ -105,7 +105,7 @@ export function useDeposit({
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             poolId: poolId ? ethers.BigNumber.from(poolId).toHexString() : undefined,
-            tokenAddress: collateralTypeTokenAddress,
+            collateralTypeTokenAddress,
           },
         ],
       });

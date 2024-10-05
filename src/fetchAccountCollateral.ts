@@ -6,7 +6,7 @@ export async function fetchAccountCollateral({
   accountId,
   tokenAddress,
 }: {
-  provider: ethers.providers.Web3Provider;
+  provider: ethers.providers.BaseProvider;
   CoreProxyContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
   tokenAddress: string;

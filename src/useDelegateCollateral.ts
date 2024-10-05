@@ -70,7 +70,7 @@ export function useDelegateCollateral({
         provider,
         CoreProxyContract,
         accountId,
-        tokenAddress: collateralTypeTokenAddress,
+        collateralTypeTokenAddress,
       });
       console.log('freshAccountAvailableCollateral', freshAccountAvailableCollateral);
 
@@ -84,7 +84,7 @@ export function useDelegateCollateral({
         CoreProxyContract,
         accountId,
         poolId,
-        tokenAddress: collateralTypeTokenAddress,
+        collateralTypeTokenAddress,
       });
       console.log('freshPositionCollateral', freshPositionCollateral);
 
@@ -100,7 +100,7 @@ export function useDelegateCollateral({
           MulticallContract,
           accountId,
           poolId,
-          tokenAddress: collateralTypeTokenAddress,
+          collateralTypeTokenAddress,
           delegateAmount,
           priceUpdateTxn: freshPriceUpdateTxn,
         });
@@ -113,7 +113,7 @@ export function useDelegateCollateral({
         CoreProxyContract,
         accountId,
         poolId,
-        tokenAddress: collateralTypeTokenAddress,
+        collateralTypeTokenAddress,
         delegateAmount,
       });
 
@@ -152,7 +152,7 @@ export function useDelegateCollateral({
           { CoreProxy: CoreProxyContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress: collateralTypeTokenAddress,
+            collateralTypeTokenAddress,
           },
         ],
       });
@@ -164,7 +164,7 @@ export function useDelegateCollateral({
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
             poolId: poolId ? ethers.BigNumber.from(poolId).toHexString() : undefined,
-            tokenAddress: collateralTypeTokenAddress,
+            collateralTypeTokenAddress,
           },
         ],
       });

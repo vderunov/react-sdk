@@ -6,7 +6,7 @@ export async function delegateCollateral({
   CoreProxyContract,
   accountId,
   poolId,
-  tokenAddress,
+  collateralTypeTokenAddress,
   delegateAmount,
 }: {
   provider: ethers.providers.Web3Provider;
@@ -14,7 +14,7 @@ export async function delegateCollateral({
   CoreProxyContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
   poolId: ethers.BigNumberish;
-  tokenAddress: string;
+  collateralTypeTokenAddress: string;
   delegateAmount: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);
@@ -24,7 +24,7 @@ export async function delegateCollateral({
     //
     accountId,
     poolId,
-    tokenAddress,
+    collateralTypeTokenAddress,
     delegateAmount,
     ethers.utils.parseEther('1'), // Leverage
   ];

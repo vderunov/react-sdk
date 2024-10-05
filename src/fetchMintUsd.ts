@@ -6,7 +6,7 @@ export async function fetchMintUsd({
   CoreProxyContract,
   accountId,
   poolId,
-  tokenAddress,
+  collateralTypeTokenAddress,
   mintUsdAmount,
 }: {
   provider: ethers.providers.Web3Provider;
@@ -14,7 +14,7 @@ export async function fetchMintUsd({
   CoreProxyContract: { address: string; abi: string[] };
   accountId: ethers.BigNumberish;
   poolId: ethers.BigNumberish;
-  tokenAddress: string;
+  collateralTypeTokenAddress: string;
   mintUsdAmount: ethers.BigNumberish;
 }) {
   const signer = provider.getSigner(walletAddress);
@@ -24,7 +24,7 @@ export async function fetchMintUsd({
     //
     accountId,
     poolId,
-    tokenAddress,
+    collateralTypeTokenAddress,
     mintUsdAmount,
   ];
   console.log('mintUsdTxnArgs', mintUsdTxnArgs);

@@ -71,7 +71,7 @@ export function useSpotSell({
       const freshBalance = await fetchTokenBalance({
         provider,
         ownerAddress: walletAddress,
-        tokenAddress: synthTokenAddress,
+        collateralTypeTokenAddress: synthTokenAddress,
       });
 
       if (freshBalance.lt(amount)) {
@@ -81,7 +81,7 @@ export function useSpotSell({
       const freshAllowance = await fetchTokenAllowance({
         provider,
         ownerAddress: walletAddress,
-        tokenAddress: synthTokenAddress,
+        collateralTypeTokenAddress: synthTokenAddress,
         spenderAddress: SpotMarketProxyContract.address,
       });
 
@@ -89,7 +89,7 @@ export function useSpotSell({
         await fetchApproveToken({
           provider,
           walletAddress,
-          tokenAddress: synthTokenAddress,
+          collateralTypeTokenAddress: synthTokenAddress,
           spenderAddress: SpotMarketProxyContract.address,
           allowance: ethers.BigNumber.from(amount).sub(freshAllowance),
         });

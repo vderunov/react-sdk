@@ -15,7 +15,7 @@ import { useSynthetix } from './useSynthetix';
 export function useSpotWrap({
   provider,
   walletAddress,
-  tokenAddress,
+  tokenAddress: collateralTypeTokenAddress,
   synthTokenAddress,
   synthMarketId,
   settlementStrategyId,
@@ -50,7 +50,7 @@ export function useSpotWrap({
           chainId &&
           provider &&
           walletAddress &&
-          tokenAddress &&
+          collateralTypeTokenAddress &&
           synthTokenAddress &&
           synthMarketId &&
           SpotMarketProxyContract?.address &&
@@ -68,7 +68,7 @@ export function useSpotWrap({
 
       const freshBalance = await fetchTokenBalance({
         provider,
-        tokenAddress,
+        collateralTypeTokenAddress,
         ownerAddress: walletAddress,
       });
 
@@ -78,7 +78,7 @@ export function useSpotWrap({
 
       const freshAllowance = await fetchTokenAllowance({
         provider,
-        tokenAddress,
+        collateralTypeTokenAddress,
         ownerAddress: walletAddress,
         spenderAddress: SpotMarketProxyContract.address,
       });
@@ -87,7 +87,7 @@ export function useSpotWrap({
         await fetchApproveToken({
           provider,
           walletAddress,
-          tokenAddress,
+          collateralTypeTokenAddress,
           spenderAddress: SpotMarketProxyContract.address,
           allowance: ethers.BigNumber.from(amount).sub(freshAllowance),
         });
@@ -143,14 +143,14 @@ export function useSpotWrap({
         queryKey: [
           chainId,
           'Allowance',
-          { tokenAddress: tokenAddress, ownerAddress: walletAddress, spenderAddress: SpotMarketProxyContract?.address },
+          { collateralTypeTokenAddress, ownerAddress: walletAddress, spenderAddress: SpotMarketProxyContract?.address },
         ],
       });
       queryClient.invalidateQueries({
         queryKey: [chainId, 'Balance', { tokenAddress: synthTokenAddress, ownerAddress: walletAddress }],
       });
       queryClient.invalidateQueries({
-        queryKey: [chainId, 'Balance', { tokenAddress: tokenAddress, ownerAddress: walletAddress }],
+        queryKey: [chainId, 'Balance', { tokenAddress: collateralTypeTokenAddress, ownerAddress: walletAddress }],
       });
 
       onSuccess();

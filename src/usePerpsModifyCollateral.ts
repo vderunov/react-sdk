@@ -32,7 +32,7 @@ export function usePerpsModifyCollateral({
       const freshBalance = await fetchTokenBalance({
         provider,
         ownerAddress: walletAddress,
-        tokenAddress: systemToken?.address,
+        collateralTypeTokenAddress: systemToken?.address,
       });
 
       if (freshBalance.lt(depositAmount)) {
@@ -42,7 +42,7 @@ export function usePerpsModifyCollateral({
       const freshAllowance = await fetchTokenAllowance({
         provider,
         ownerAddress: walletAddress,
-        tokenAddress: systemToken.address,
+        collateralTypeTokenAddress: systemToken.address,
         spenderAddress: PerpsMarketProxyContract.address,
       });
 
@@ -52,7 +52,7 @@ export function usePerpsModifyCollateral({
         await fetchApproveToken({
           provider,
           walletAddress,
-          tokenAddress: systemToken.address,
+          collateralTypeTokenAddress: systemToken.address,
           spenderAddress: PerpsMarketProxyContract.address,
           allowance: ethers.BigNumber.from(depositAmount).sub(freshAllowance),
         });

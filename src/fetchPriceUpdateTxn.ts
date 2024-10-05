@@ -11,7 +11,7 @@ export async function fetchPriceUpdateTxn({
   provider: ethers.providers.BaseProvider;
   MulticallContract: { address: string; abi: string[] };
   PythERC7412WrapperContract: { address: string; abi: string[] };
-  priceIds: ethers.BigNumberish[];
+  priceIds: string[];
   stalenessTolerance?: ethers.BigNumberish;
 }) {
   console.time('fetchPriceUpdateTxn');
@@ -20,10 +20,7 @@ export async function fetchPriceUpdateTxn({
 
   const MulticallInterface = new ethers.utils.Interface(MulticallContract.abi);
   const PythERC7412WrapperInterface = new ethers.utils.Interface(PythERC7412WrapperContract.abi);
-
-  const priceIdsHex = priceIds.map((priceId) => ethers.BigNumber.from(priceId).toHexString());
-
-  const txs = priceIdsHex.map((priceId) => ({
+  const txs = priceIds.map((priceId) => ({
     target: PythERC7412WrapperContract.address,
     callData: PythERC7412WrapperInterface.encodeFunctionData('getLatestPrice', [priceId, stalenessTolerance]),
     value: 0,
@@ -35,7 +32,7 @@ export async function fetchPriceUpdateTxn({
     data: MulticallInterface.encodeFunctionData('aggregate3Value', [txs]),
   });
   const [latestPrices] = MulticallInterface.decodeFunctionResult('aggregate3Value', result);
-  const stalePriceIds = priceIdsHex.filter((_priceId, i) => !latestPrices[i].success);
+  const stalePriceIds = priceIds.filter((_priceId, i) => !latestPrices[i].success);
   if (stalePriceIds.length < 1) {
     return {
       target: PythERC7412WrapperContract.address,

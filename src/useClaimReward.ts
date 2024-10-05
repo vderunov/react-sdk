@@ -12,7 +12,7 @@ import { useSynthetix } from './useSynthetix';
 export function useClaimReward({
   provider,
   walletAddress,
-  tokenAddress,
+  tokenAddress: collateralTypeTokenAddress,
   accountId,
   onSuccess,
 }: {
@@ -40,7 +40,7 @@ export function useClaimReward({
           provider &&
           walletAddress &&
           accountId &&
-          tokenAddress &&
+          collateralTypeTokenAddress &&
           CoreProxyContract &&
           MulticallContract &&
           PythERC7412WrapperContract &&
@@ -66,7 +66,7 @@ export function useClaimReward({
         provider,
         CoreProxyContract,
         accountId,
-        tokenAddress,
+        collateralTypeTokenAddress,
       });
       console.log('freshAccountAvailableCollateral', freshAccountAvailableCollateral);
 
@@ -83,7 +83,7 @@ export function useClaimReward({
           CoreProxyContract,
           MulticallContract,
           accountId,
-          tokenAddress,
+          collateralTypeTokenAddress,
           withdrawAmount,
           priceUpdateTxn: freshPriceUpdateTxn,
         });
@@ -96,7 +96,7 @@ export function useClaimReward({
         walletAddress,
         CoreProxyContract,
         accountId,
-        tokenAddress,
+        collateralTypeTokenAddress,
         withdrawAmount,
       });
       return { priceUpdated: false };
@@ -123,7 +123,7 @@ export function useClaimReward({
           { CoreProxy: CoreProxyContract?.address, Multicall: MulticallContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress,
+            tokenAddress: collateralTypeTokenAddress,
           },
         ],
       });
@@ -134,7 +134,7 @@ export function useClaimReward({
           { CoreProxy: CoreProxyContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress,
+            collateralTypeTokenAddress,
           },
         ],
       });
@@ -143,7 +143,7 @@ export function useClaimReward({
           chainId,
           'Balance',
           {
-            tokenAddress,
+            tokenAddress: collateralTypeTokenAddress,
             ownerAddress: walletAddress,
           },
         ],

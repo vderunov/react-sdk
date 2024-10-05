@@ -66,7 +66,7 @@ export function useMintUsd({
           MulticallContract,
           accountId,
           poolId,
-          tokenAddress: collateralTypeTokenAddress,
+          collateralTypeTokenAddress,
           mintUsdAmount,
           priceUpdateTxn,
         });
@@ -79,7 +79,7 @@ export function useMintUsd({
         CoreProxyContract,
         accountId,
         poolId,
-        tokenAddress: collateralTypeTokenAddress,
+        collateralTypeTokenAddress,
         mintUsdAmount,
       });
       return { priceUpdated: false };
@@ -117,7 +117,7 @@ export function useMintUsd({
           { CoreProxy: CoreProxyContract?.address },
           {
             accountId: accountId ? ethers.BigNumber.from(accountId).toHexString() : undefined,
-            tokenAddress: systemToken?.address,
+            collateralTypeTokenAddress: systemToken?.address,
           },
         ],
       });

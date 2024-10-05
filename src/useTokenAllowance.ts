@@ -6,7 +6,7 @@ import { useSynthetix } from './useSynthetix';
 
 export function useTokenAllowance({
   provider,
-  tokenAddress,
+  tokenAddress: collateralTypeTokenAddress,
   ownerAddress,
   spenderAddress,
 }: {
@@ -19,15 +19,15 @@ export function useTokenAllowance({
   const errorParser = useErrorParser();
 
   return useQuery<ethers.BigNumber>({
-    enabled: Boolean(chainId && provider && tokenAddress && ownerAddress && spenderAddress),
-    queryKey: [chainId, 'Allowance', { tokenAddress, ownerAddress, spenderAddress }],
+    enabled: Boolean(chainId && provider && collateralTypeTokenAddress && ownerAddress && spenderAddress),
+    queryKey: [chainId, 'Allowance', { collateralTypeTokenAddress, ownerAddress, spenderAddress }],
     queryFn: async () => {
-      if (!(chainId && provider && tokenAddress && ownerAddress && spenderAddress)) {
+      if (!(chainId && provider && collateralTypeTokenAddress && ownerAddress && spenderAddress)) {
         throw 'OMFG';
       }
       return fetchTokenAllowance({
         provider,
-        tokenAddress,
+        collateralTypeTokenAddress,
         ownerAddress,
         spenderAddress,
       });
